@@ -1,0 +1,118 @@
+@use '../base/variables' as *;
+
+.our-story {
+    position: relative;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    padding-top: 7.5rem;
+    padding-bottom: 8.2rem;
+
+    @media (max-width: $tablet) {
+        padding-top: 4.125rem;
+        padding-bottom: 4.375rem;
+    }
+
+    @media (max-width: $mobile) {
+        padding-top: 2.5rem;
+        padding-bottom: 2.5rem;
+    }
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.4);
+        z-index: 1;
+    }
+
+    &__content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        max-width: 59.75rem;
+        margin: 0 auto;
+        z-index: 2;
+        position: relative;
+    }
+
+    &__title {
+        font-family: $font-futura;
+        font-weight: 500;
+        font-size: 3.375rem;
+        color: #fff;
+        line-height: 100%;
+        margin-bottom: 2.5rem;
+        
+        display: inline-block;
+        position: relative;
+
+        @media (max-width: $tablet) {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+        }
+
+        @media (max-width: $mobile) {
+            font-size: 1.875rem;
+            margin-bottom: 1.5rem;
+        }
+
+        &::after {
+            content: '';
+            position: absolute;
+            top: -22px;
+            right: -45px;
+            width: 40px;
+            height: 40px;
+            background-image: url('data:image/svg+xml,<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M19.6337 37.8516C23.7921 37.8516 31.0693 37.5084 38 37.5084M13.396 28.5869L27.9505 10.7437M3 25.4986C3 24.4006 3 9.94306 3 2.85156" stroke="white" stroke-width="3.46535" stroke-linecap="round"/></svg>');
+            background-repeat: no-repeat;
+            background-size: contain;
+
+            @media (max-width: $tablet) {
+                width: 32px;
+                height: 32px;
+                top: -20px;
+                right: -35px;
+            }
+
+            @media (max-width: $mobile) {
+                width: 28px;
+                height: 28px;
+                right: -30px;
+            }
+        }
+    }
+
+    &__text {
+        font-family: $font-futura;
+        font-weight: 500;
+        font-size: 1.125rem;
+        line-height: 26px;
+        text-align: center;
+        color: #fff;
+
+        @media (max-width: $tablet) {
+            font-size: 1rem;
+            line-height: 22px;
+        }
+
+        @media (max-width: $mobile) {
+            font-size: 0.875rem;
+            line-height: 20px;
+        }
+
+        p {
+            @media (max-width: $mobile) {
+                margin-bottom: 0.8rem;
+            }
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
+    }
+}

@@ -1,0 +1,33 @@
+@use '../base/variables' as *;
+
+.footer {
+    padding: 1.25rem 0;
+    
+    &__container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    &__copyright {
+        p {
+            font-family: $font-futura;
+            margin: 0;
+            font-weight: 300;
+            font-size: 0.875rem;
+            line-height: 100%;
+            color: $main-black;
+
+            a {
+                color: $main-blue;
+                text-decoration: none;
+                transition: color 0.3s ease;
+
+                &:hover {
+                    color: $main-black;
+                    text-decoration: underline;
+                }
+            }
+        }
+    }
+}

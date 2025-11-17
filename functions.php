@@ -49,7 +49,7 @@ function landingpadtheme_setup() {
 	// This theme uses wp_nav_menu() in one location.
 	register_nav_menus(
 		array(
-			'menu-1' => esc_html__( 'Primary', 'landingpadtheme' ),
+			'header_menu' => esc_html__( 'Header menu', 'landingpadtheme' ),
 		)
 	);
 
@@ -139,15 +139,71 @@ add_action( 'widgets_init', 'landingpadtheme_widgets_init' );
  */
 function landingpadtheme_scripts() {
 	wp_enqueue_style( 'landingpadtheme-style', get_stylesheet_uri(), array(), _S_VERSION );
-	wp_style_add_data( 'landingpadtheme-style', 'rtl', 'replace' );
 
-	wp_enqueue_script( 'landingpadtheme-navigation', get_template_directory_uri() . '/js/navigation.js', array(), _S_VERSION, true );
+	wp_enqueue_style( 'slick-css', get_template_directory_uri() . '/vendor/slick/slick.css', array(),  '1.8.1' );
+
+    wp_enqueue_script( 'slick-js', get_template_directory_uri() . '/vendor/slick/slick.min.js', array('jquery'), '1.8.1', true );
 
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
 		wp_enqueue_script( 'comment-reply' );
 	}
 }
 add_action( 'wp_enqueue_scripts', 'landingpadtheme_scripts' );
+
+
+// -- VITE SETUP
+
+function vite_assets() {
+
+	$vite_dev_server = 'http://localhost:5173';
+
+	$is_dev = defined('VITE_DEV_MODE') && VITE_DEV_MODE === true;
+
+	if ( $is_dev ) {
+		// dev mode
+		wp_enqueue_script( 'vite-client', $vite_dev_server . '/@vite/client', [], null, true );
+
+		wp_enqueue_script( 'main-js', $vite_dev_server . '/src/js/main.js', array('jquery', 'slick-js'), '1.0', true );
+	} else {
+		// prod mode
+		$dist_path = get_template_directory_uri() . '/dist/';
+		$dist_dir = get_template_directory() . '/dist/';
+
+		$manifest_file = $dist_dir . '.vite/manifest.json';
+
+		if ( file_exists( $manifest_file ) ) {
+			$manifest = json_decode( file_get_contents( $manifest_file ), true );
+
+			if ( isset( $manifest['src/js/main.js'] ) ) {
+				wp_enqueue_script( 'main-js', $dist_path . $manifest['src/js/main.js']['file'], array('jquery'), null, true );
+			}
+			if ( isset( $manifest['src/scss/main.scss'] ) ) {
+                wp_enqueue_style( 'main-css', $dist_path . $manifest['src/scss/main.scss']['file'], [], null );
+            }
+		}
+	}
+}
+add_action( 'wp_enqueue_scripts', 'vite_assets' );
+
+// add type module for vite scripts
+function add_module_type_attribute( $tag, $handle, $src ) {
+    if ( $handle === 'vite-client' || $handle === 'main-js' ) {
+        
+        $is_dev = defined('VITE_DEV_MODE') && VITE_DEV_MODE === true;
+        
+        if ( $is_dev ) {
+            // dev mode
+             $tag = '<script type="module" src="' . esc_url( $src ) . '" id="' . $handle . '-js"></script>';
+        } else {
+            // prod mode
+            if ($handle === 'main-js') {
+                 $tag = '<script type="module" src="' . esc_url( $src ) . '" id="' . $handle . '-js"></script>';
+            }
+        }
+    }
+    return $tag;
+}
+add_filter( 'script_loader_tag', 'add_module_type_attribute', 10, 3 );
 
 /**
  * Implement the Custom Header feature.
@@ -176,3 +232,110 @@ if ( defined( 'JETPACK__VERSION' ) ) {
 	require get_template_directory() . '/inc/jetpack.php';
 }
 
+
+// CUSTOM
+
+// change custom logo, remove <img> and return <svg></svg>
+function landingpad_get_inline_logo() {
+    $custom_logo_id = get_theme_mod( 'custom_logo' );
+    
+    if ( ! $custom_logo_id ) {
+        return;
+    }
+
+    $logo_file = get_attached_file( $custom_logo_id );
+    
+    $mime_type = get_post_mime_type( $custom_logo_id );
+    
+    if ( file_exists( $logo_file ) && 'image/svg+xml' === $mime_type ) {
+        return file_get_contents( $logo_file );
+    }
+    
+    return wp_get_attachment_image( $custom_logo_id, 'full' );
+}
+
+// CPT Testimonials
+function landingpad_register_testimonials_cpt() {
+	$labels = array(
+		'name' => 'Testimonials',
+		'singular_name' => 'Testimonial',
+		'menu_name' => 'Testimonials',
+		'add_new' => 'Add new',
+		'add_new_item' => 'Add new testimonial',
+		'edit_item' => 'Edit testimonial',
+
+	);
+	$args = array(
+		'labels' => $labels,
+		'public' => false,
+		'has_archive' => false,
+		'publicly_queryable' => false,
+		'show_ui' => true,
+		'show_in_menu' => true,
+		'menu_icon' => 'dashicons-format-quote',
+		'supports' => array( 'title', 'editor' ),
+		'menu_position' => 26,
+	);
+	register_post_type( 'testimonials', $args );
+}
+add_action( 'init', 'landingpad_register_testimonials_cpt' );
+
+
+// change placeholder in title on Testimonial CPT and Team CPT
+function landingpad_change_cpt_title_placeholders( $title ) {
+    $screen = get_current_screen();
+    if ( ! $screen ) {
+        return $title;
+    }
+
+    if ( 'testimonials' === $screen->post_type ) {
+        return 'Add author name';
+    }
+
+    if ( 'team' === $screen->post_type ) {
+        return 'Add member name';
+    }
+
+    return $title;
+}
+add_filter( 'enter_title_here', 'landingpad_change_cpt_title_placeholders' );
+
+// CPT Team
+function landingpad_register_team_cpt() {
+	$labels = array(
+		'name' => 'Team',
+		'singular_name' => 'Team member',
+		'menu_name' => 'Team',
+		'add_new' => 'Add new member',
+		'add_new_item' => 'Add new member',
+
+	);
+	$args = array(
+		'labels' => $labels,
+		'public' => false,
+		'has_archive' => false,
+		'publicly_queryable' => false,
+		'show_ui' => true,
+		'show_in_menu' => true,
+		'menu_icon' => 'dashicons-groups',
+		'supports' => array( 'title', 'editor', 'thumbnail', 'page-attributes' ),
+		'menu_position' => 27,
+	);
+	register_post_type( 'team', $args );
+}
+add_action( 'init', 'landingpad_register_team_cpt' );
+
+
+// Added Options Page
+if ( function_exists('acf_add_options_page') ) {
+    
+    acf_add_options_page(array(
+        'page_title'    => 'Site General Settings',
+        'menu_title'    => 'Site Settings',
+        'menu_slug'     => 'site-general-settings',
+        'capability'    => 'edit_posts',
+        'redirect'      => false,
+        'icon_url'      => 'dashicons-admin-generic',
+        'position'      => 28
+    ));
+}

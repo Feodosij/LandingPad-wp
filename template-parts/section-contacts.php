@@ -1,0 +1,87 @@
+<?php
+/**
+ * Reusable Template: Contacts Section
+ */
+
+$title = get_field('contacts_section_title', 'option');
+
+$email_icon = get_field('contact_email_icon', 'option');
+$email      = get_field('contact_email', 'option');
+
+$phone_icon = get_field('contact_phone_icon', 'option');
+$phone      = get_field('contact_phone', 'option');
+
+$social_icon = get_field('contact_social_icon', 'option');
+$socials     = get_field('contact_social_list', 'option');
+?>
+
+<section class="contacts">
+    <div class="container">
+        <?php if ( $title ) {?>
+            <div class="contacts__title">
+                <h2><?php echo esc_html( $title ); ?></h2>
+            </div>
+        <?php } ?>
+        <div class="contacts__grid">
+            <div class="contact-card">
+                <div class="contact-card__top-icon">
+                    <?php if ( $email_icon ) { ?>
+                        <img src="<?php echo esc_url( $email_icon ); ?>" alt="Email icon">
+                    <?php } ?>
+                </div>
+
+                <div class="contact-card__divider"></div>
+
+                <div class="contact-card__content">
+                    <?php if ( $email ) { ?>
+                        <a href="mailto:<?php echo esc_attr( $email ); ?>" class="contact-link"><?php echo esc_html( $email ); ?></a>
+                    <?php } ?>
+                </div>
+            </div>
+
+            <div class="contact-card">
+                <div class="contact-card__top-icon">
+                    <?php if ( $phone_icon ) { ?>
+                        <img src="<?php echo esc_url( $phone_icon ); ?>" alt="Phone icon">
+                    <?php } ?>
+                </div>
+
+                <div class="contact-card__divider"></div>
+
+                <div class="contact-card__content">
+                    <?php if ( $phone ) { 
+                        $phone_clean = preg_replace( '/[^0-9+]/', '', $phone ); ?>
+                        <a href="tel:<?php echo esc_attr( $phone_clean ); ?>" class="contact-link"><?php echo esc_html( $phone ); ?></a>
+                    <?php } ?>
+                </div>
+            </div>
+
+            <div class="contact-card">
+                <div class="contact-card__top-icon">
+                    <?php if ( $social_icon ) { ?>
+                        <img src="<?php echo esc_url( $social_icon ); ?>" alt="Social icon">
+                    <?php } ?>
+                </div>
+
+                <div class="contact-card__divider"></div>
+
+                <div class="contact-card__content">
+                    <?php if ( $socials ) { ?>
+                        <div class="socials-list">
+                            <?php foreach ( $socials as $item ) { 
+                                $icon = $item['social_icon'];
+                                $link = $item['social_link'];
+                                if ( !$icon ) continue;
+                                ?>
+
+                                <a href="<?php echo esc_url( $link ); ?>" class="social-link" target="_blank">
+                                    <img src="<?php echo esc_url( $icon ); ?>" alt="Social icon">
+                                </a>
+                            <?php } ?>
+                        </div>
+                    <?php } ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

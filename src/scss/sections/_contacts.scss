@@ -1,0 +1,161 @@
+@use '../base/variables' as *;
+
+.contacts {
+    padding: 6.25rem 0;
+
+    @media (max-width: $tablet) {
+        padding-top: 4.125rem;
+        padding-bottom: 4.375rem;
+    }
+
+    @media (max-width: $mobile) {
+        padding-top: 2.5rem;
+        padding-bottom: 2.5rem;
+    }
+
+    &__title {
+        text-align: center;
+        margin-bottom: 2.75rem;
+
+        h2 {
+            font-family: $font-futura;
+            font-weight: 500;
+            font-size: 3.775rem;
+            display: inline-block;
+            position: relative;
+            margin: 0;
+            color: $main-black;
+
+            &::after {
+                content: '';
+                position: absolute;
+                top: -15px;
+                right: -42px;
+                width: 40px;
+                height: 40px;
+                background-image: url('data:image/svg+xml,<svg width="39" height="39" viewBox="0 0 39 39" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M18.3663 36.7327C22.5247 36.7327 29.802 36.3895 36.7327 36.3895M12.1287 27.468L26.6832 9.62482M1.73267 24.3797C1.73267 23.2817 1.73267 8.82417 1.73267 1.73266" stroke="%230F38B4" stroke-width="3.46535" stroke-linecap="round" /></svg>');
+                background-repeat: no-repeat;
+                background-size: contain;
+
+                @media (max-width: $tablet) {
+                    width: 32px;
+                    height: 32px;
+                    top: -12px;
+                    right: -32px;
+                }
+
+                @media (max-width: $mobile) {
+                    width: 28px;
+                    height: 28px;
+                    right: -27px;
+                }
+            }
+
+            @media (max-width: $tablet) {
+                font-size: 2.5rem;
+            }
+
+            @media (max-width: $mobile) {
+                font-size: 1.875rem;
+            }
+        }
+
+        @media (max-width: $tablet) {
+            margin-bottom: 2rem;
+        }
+
+        @media (max-width: $mobile) {
+            margin-bottom: 1.5rem;
+        }
+    }
+
+    &__grid {
+        display: grid;
+        grid-template-columns: repeat(3, 16.563rem);
+        gap: 2.5rem;
+        justify-content: center;
+        align-items: center;
+
+        @media (max-width: $tablet) {
+            grid-template-columns: repeat(3, 13rem);
+            gap: 1.5rem;
+        }
+
+        @media (max-width: $tablet-sm) {
+            grid-template-columns: 17.563rem;
+            gap: 1.5rem;
+        }
+    }
+}
+
+.contact-card {
+    padding: 1.25rem 1.25rem 2rem;
+    background-color: #F9FBFF;
+    border-radius: 8px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.875rem;
+
+    &__top-icon {
+        width: 24px;
+        height: 24px;
+    }
+
+    &__divider {
+        width: 100%;
+        height: 1px;
+        background-color: #A3ABF4;
+    }
+
+    &__content {
+        .contact-link {
+            text-decoration: none;
+            color: $text-blue;
+            font-family: $font-futura;
+            font-weight: 400;
+            font-size: 1.125rem;
+            line-height: 26px;
+        }
+
+        .socials-list {
+            display: flex;
+            gap: 2rem;
+
+            .social-link {
+                position: relative;
+                display: block;
+
+                img {
+                    width: 20px;
+                    height: 20px;
+                    object-fit: contain;
+                }
+
+                &:after {
+                    content: '';
+                    position: absolute;
+                    bottom: -16px;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    width: 18px;
+                    height: 12px;
+
+                    background-image: url('data:image/svg+xml,<svg width="21" height="14" viewBox="0 0 21 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1.00024 6C4.83358 4.33333 13.6002 1 18.0002 1C23.5002 1 6.50024 7.5 6.00024 11C5.50024 14.5 13.0002 8 17.0002 8.5" stroke="%232967F0" stroke-width="2" stroke-linecap="round" /></svg>');
+                    background-repeat: no-repeat;
+                    background-size: contain;
+                    opacity: 0;
+                    transition: opacity 0.3s ease;
+                }
+
+                &:hover {
+                    &::after {
+                        opacity: 1;
+                    }
+                }
+            }
+        }
+    }
+}

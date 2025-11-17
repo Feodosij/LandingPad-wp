@@ -1,0 +1,23 @@
+
+// fonts
+$font-futura: 'Futura', sans-serif;
+$font-gilroy: 'Gilroy', sans-serif;
+$font-futura-pt: 'Futura PT', sans-serif;
+
+// clors
+$main-blue: #2967F0;
+$main-black: #0F0F10;
+$text-blue: #0F38B4;
+
+// responsive
+$mobile: 576px;
+$tablet-sm: 768px;
+$tablet: 992px;
+$desktop-sm: 1200px;
+$desktop: 1400px;
+
+// container
+:root {
+    --container-width: 1248px;
+    --container-padding-x: 64px;
+}

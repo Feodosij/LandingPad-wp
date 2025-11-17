@@ -1,0 +1,95 @@
+{
+  "src/fonts/FuturaBookC.woff": {
+    "file": "assets/FuturaBookC-BmUX4WAq.woff",
+    "src": "src/fonts/FuturaBookC.woff"
+  },
+  "src/fonts/FuturaLT-Bold.woff2": {
+    "file": "assets/FuturaLT-Bold-DEX6PzMS.woff2",
+    "src": "src/fonts/FuturaLT-Bold.woff2"
+  },
+  "src/fonts/FuturaLT-Light.woff2": {
+    "file": "assets/FuturaLT-Light-ByH3T_UV.woff2",
+    "src": "src/fonts/FuturaLT-Light.woff2"
+  },
+  "src/fonts/FuturaMediumC.woff": {
+    "file": "assets/FuturaMediumC-BsEEVmpZ.woff",
+    "src": "src/fonts/FuturaMediumC.woff"
+  },
+  "src/fonts/FuturaPT-Bold.woff": {
+    "file": "assets/FuturaPT-Bold-BbVXbS3M.woff",
+    "src": "src/fonts/FuturaPT-Bold.woff"
+  },
+  "src/fonts/FuturaPT-Book.woff": {
+    "file": "assets/FuturaPT-Book-lScYnpKG.woff",
+    "src": "src/fonts/FuturaPT-Book.woff"
+  },
+  "src/fonts/FuturaPT-Light.woff": {
+    "file": "assets/FuturaPT-Light-BbWpkMs-.woff",
+    "src": "src/fonts/FuturaPT-Light.woff"
+  },
+  "src/fonts/Gilroy-Medium.woff2": {
+    "file": "assets/Gilroy-Medium-RhujHmrb.woff2",
+    "src": "src/fonts/Gilroy-Medium.woff2"
+  },
+  "src/fonts/Gilroy-Regular.woff2": {
+    "file": "assets/Gilroy-Regular-CY081Tb4.woff2",
+    "src": "src/fonts/Gilroy-Regular.woff2"
+  },
+  "src/js/main-legacy.js": {
+    "file": "assets/main-legacy-Bp5B6-Sj.js",
+    "name": "main",
+    "src": "src/js/main-legacy.js",
+    "isEntry": true,
+    "imports": [
+      "src/scss/main-legacy.scss"
+    ]
+  },
+  "src/js/main.js": {
+    "file": "assets/main-CwmMSTSM.js",
+    "name": "main",
+    "src": "src/js/main.js",
+    "isEntry": true,
+    "css": [
+      "assets/styles-CfmXcEF3.css"
+    ],
+    "assets": [
+      "assets/Gilroy-Regular-CY081Tb4.woff2",
+      "assets/Gilroy-Medium-RhujHmrb.woff2",
+      "assets/FuturaLT-Light-ByH3T_UV.woff2",
+      "assets/FuturaBookC-BmUX4WAq.woff",
+      "assets/FuturaMediumC-BsEEVmpZ.woff",
+      "assets/FuturaLT-Bold-DEX6PzMS.woff2",
+      "assets/FuturaPT-Book-lScYnpKG.woff",
+      "assets/FuturaPT-Light-BbWpkMs-.woff",
+      "assets/FuturaPT-Bold-BbVXbS3M.woff"
+    ]
+  },
+  "src/scss/main-legacy.scss": {
+    "file": "assets/styles-legacy-CvVAz7VL.js",
+    "name": "styles",
+    "src": "src/scss/main-legacy.scss",
+    "isEntry": true,
+    "assets": [
+      "assets/Gilroy-Regular-CY081Tb4.woff2",
+      "assets/Gilroy-Medium-RhujHmrb.woff2",
+      "assets/FuturaLT-Light-ByH3T_UV.woff2",
+      "assets/FuturaBookC-BmUX4WAq.woff",
+      "assets/FuturaMediumC-BsEEVmpZ.woff",
+      "assets/FuturaLT-Bold-DEX6PzMS.woff2",
+      "assets/FuturaPT-Book-lScYnpKG.woff",
+      "assets/FuturaPT-Light-BbWpkMs-.woff",
+      "assets/FuturaPT-Bold-BbVXbS3M.woff"
+    ]
+  },
+  "src/scss/main.scss": {
+    "file": "assets/styles-CfmXcEF3.css",
+    "src": "src/scss/main.scss",
+    "isEntry": true
+  },
+  "vite/legacy-polyfills-legacy": {
+    "file": "assets/polyfills-legacy-BpgqBDQJ.js",
+    "name": "polyfills",
+    "src": "vite/legacy-polyfills-legacy",
+    "isEntry": true
+  }
+}

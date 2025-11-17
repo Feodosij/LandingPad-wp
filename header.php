@@ -25,35 +25,51 @@
 <div id="page" class="site">
 	<a class="skip-link screen-reader-text" href="#primary"><?php esc_html_e( 'Skip to content', 'landingpadtheme' ); ?></a>
 
-	<header id="masthead" class="site-header">
-		<div class="site-branding">
-			<?php
-			the_custom_logo();
-			if ( is_front_page() && is_home() ) :
-				?>
-				<h1 class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></h1>
-				<?php
-			else :
-				?>
-				<p class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></p>
-				<?php
-			endif;
-			$landingpadtheme_description = get_bloginfo( 'description', 'display' );
-			if ( $landingpadtheme_description || is_customize_preview() ) :
-				?>
-				<p class="site-description"><?php echo $landingpadtheme_description; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></p>
-			<?php endif; ?>
-		</div><!-- .site-branding -->
+	<header id="masthead" class="site-header header">
+		<div class="header__container container">
+			<div class="header__logo">
+				<a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home" class="header__logo-link">
+					<?php echo landingpad_get_inline_logo(); 
+                    
+                    if ( ! get_theme_mod( 'custom_logo' ) ) {
+                        bloginfo( 'name' ); 
+                    }
+                    ?>
+				</a>
+			</div>
 
-		<nav id="site-navigation" class="main-navigation">
-			<button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false"><?php esc_html_e( 'Primary Menu', 'landingpadtheme' ); ?></button>
-			<?php
-			wp_nav_menu(
-				array(
-					'theme_location' => 'menu-1',
-					'menu_id'        => 'primary-menu',
-				)
-			);
-			?>
-		</nav><!-- #site-navigation -->
+			<nav id="site-navigation" class="header__nav main-navigation" aria-label="<?php esc_attr_e( 'Main menu', 'landingpadtheme' ); ?>">
+				<?php
+					wp_nav_menu(
+						array(
+							'theme_location' => 'header_menu',
+							'menu_id'        => 'primary-menu',
+							'menu_class'	 => 'header__menu menu',
+							'container'		 => false,
+						)
+					);
+				?>
+			</nav>
+
+			<button class="burger" id="burger" aria-label="Toggle menu" aria-expanded="false">
+					<span class="burger__line"></span>
+					<span class="burger__line"></span>
+					<span class="burger__line"></span>
+			</button>
+		</div>
+		<nav class="mobile-menu " id="mobile-menu" aria-label="<?php esc_attr_e( 'Mobile menu', 'landingpadtheme' ); ?>">
+			<div class="mobile-menu__container container">
+				<?php
+					wp_nav_menu(
+						array(
+							'theme_location' => 'header_menu',
+							'menu_class'	 => 'mobile-menu__list',
+							'container'		 => false,
+						)
+					);
+				?>
+			</div>
+		</nav>
+		<div class="mobile-menu-overlay" id="js-menu-overlay"></div>
+		
 	</header><!-- #masthead -->
