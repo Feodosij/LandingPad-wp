@@ -6,7 +6,7 @@
 $our_story_bg = get_field('our_story_image', 'option');
 ?>
 
- <section class="our-story" style="<?php echo $our_story_bg ? 'background-image: url(' . esc_url($our_story_bg) . ');' : ''; ?>">
+<section class="our-story">
     <div class="container">
         <div class="our-story__content">
             <?php if ( $our_story_title = get_field('our_story_title', 'option') ) { ?>
@@ -18,4 +18,7 @@ $our_story_bg = get_field('our_story_image', 'option');
             <?php } ?>
         </div>                             
     </div>
+    <?php if ( $our_story_bg ) { ?>
+        <img src="<?php echo esc_url($our_story_bg); ?>" alt="Our Story Background" class="our-story__background" loading="lazy">
+    <?php } ?>
 </section>

@@ -3,7 +3,7 @@
 .team {
     
     &__wrapper {
-        background-color: var(--team-bg);
+        background-color: var(--accent-bg);
         border-radius: 1rem;
         padding: 5rem 2rem 3.125rem;
         position: relative;
@@ -15,7 +15,7 @@
             content: '';
             position: absolute;
             border-radius: 50%;
-            background-color: var(--team-accent);
+            background-color: var(--accent-blur);
             opacity: 1;
             z-index: 0;
         }
@@ -80,25 +80,18 @@
         position: relative;
         display: inline-block;
 
-        &::after {
-            content: '';
+        svg {
             position: absolute;
             top: -32px;
             left: -55px;
             width: 56px;
             height: 56px;
             z-index: 1;
+
+            path {
+                stroke: var(--accent-font);
+            }
         
-            background-color: var(--team-accent);
-            $icon-url: "data:image/svg+xml,%3Csvg width='56' height='56' viewBox='0 0 56 56' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M53.5 28.9857C53.5 22.9889 53 12.4946 53 2.5M40 37.9808L14 16.9922M35.5 52.9727C33.9 52.9727 12.8333 52.9727 2.5 52.9727' stroke='black' stroke-width='5' stroke-linecap='round'/%3E%3C/svg%3E";
-            -webkit-mask-image: url($icon-url);
-            mask-image: url($icon-url);
-
-            -webkit-mask-repeat: no-repeat;
-            mask-repeat: no-repeat;
-            -webkit-mask-size: contain;
-            mask-size: contain;
-
             @media (max-width: $tablet) {
                 top: -25px;
                 left: -45px;
@@ -133,7 +126,7 @@
         max-width: 25rem;
 
         strong, b, span {
-            color: var(--team-accent);
+            color: var(--accent-font);
         }
 
         @media (max-width: $tablet) {
@@ -202,7 +195,7 @@
         font-size: 0.875rem;
         line-height: 24px;
         margin-bottom: 1.5rem;
-        color: var(--team-accent);
+        color: var(--accent-font);
 
         @media (max-width: $tablet-sm) {
             margin-bottom: 0.8rem;         

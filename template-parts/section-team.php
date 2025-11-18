@@ -7,8 +7,9 @@
 $team_title = get_field( 'team_section_title', 'option' );
 $team_subtitle = get_field( 'team_section_subtitle', 'option' );
 
-$bg_color     = get_field('team_bg_color') ?: '#DBEBFF';
-$accent_color = get_field('team_accent_color') ?: '#0F38B4';
+$accent_bg = isset($GLOBALS['accent_bg']) ? $GLOBALS['accent_bg'] : '#DBEBFF';
+$accent_font = isset($GLOBALS['accent_font']) ? $GLOBALS['accent_font'] : '#0F38B4';
+$accent_blur = isset($GLOBALS['accent_blur']) ? $GLOBALS['accent_blur'] : '#3060C9';
 
 $team_query = new WP_Query( array(
     'post_type' => 'team',
@@ -20,12 +21,18 @@ $team_query = new WP_Query( array(
 
 if ( $team_query->have_posts() ) { ?>
 
-    <section class="team" style="--team-bg: <?php echo esc_attr( $bg_color ); ?>; --team-accent: <?php echo esc_attr( $accent_color ); ?>;">
+    <section class="team" style="--accent-bg: <?php echo esc_attr( $accent_bg ); ?>; --accent-font: <?php echo esc_attr( $accent_font ); ?>; --accent-blur: <?php echo esc_attr( $accent_blur ); ?>;">
         <div class="team__wrapper">
             <div class="container">
                 <div class="team__header">
                     <?php if ( $team_title ) { ?>
-                        <h2 class="team__title"><?php echo esc_html( $team_title ); ?></h2>
+                        <h2 class="team__title">
+                            <?php echo esc_html( $team_title ); ?>
+
+                            <svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M53.5 28.9857C53.5 22.9889 53 12.4946 53 2.5M40 37.9808L14 16.9922M35.5 52.9727C33.9 52.9727 12.8333 52.9727 2.5 52.9727" stroke="#0F38B4" stroke-width="5" stroke-linecap="round" />
+                            </svg>
+                        </h2>
                     <?php } ?>
                     
                     <?php if ( $team_subtitle ) { ?>
@@ -44,7 +51,7 @@ if ( $team_query->have_posts() ) { ?>
                             <div class="team-card__header">
                                 <div class="team-card__image-wrapper">
                                     <?php if ( $photo_url ) { ?>
-                                        <img src="<?php echo esc_url( $photo_url ); ?>" alt="<?php the_title_attribute(); ?>" class="team-card__image">
+                                        <img src="<?php echo esc_url( $photo_url ); ?>" alt="<?php the_title_attribute(); ?>" class="team-card__image" loading="lazy">
                                     <?php } ?>
                                 </div>
 

@@ -188,23 +188,32 @@
             box-shadow: 0 15px 30px rgba(0,0,0,0.2);
             padding: 0 1rem;
         }
-    }
 
-    &__btn {
-        width: 100%;
-        margin: 0 0 1.5rem 0;
-        padding: 0.875rem 2.5rem;
-        border-radius: 4px;
-        font-family: $font-futura;
-        font-weight: 500;
-        font-size: 1rem;
-        background-color: var(--card-accent); 
-        color: #fff;
-        white-space: nowrap;
-        pointer-events: none;
+        a {
+            display: flex;
+            justify-content: center;
 
-        @media (max-width: $tablet) {
-            margin-bottom: 1rem;
+            width: 100%;
+            margin: 0 0 1.5rem 0;
+            padding: 0.875rem 2.5rem;
+            border-radius: 4px;
+            font-family: $font-futura;
+            font-weight: 500;
+            font-size: 1rem;
+            background-color: var(--card-accent); 
+            color: #fff;
+            white-space: nowrap;
+            text-decoration: none;
+            z-index: 2;
+            transition: all 0.3s ease;
+
+            @media (max-width: $tablet) {
+                margin-bottom: 1rem;
+            }
+
+            &:hover {
+                background-color: color-mix(in srgb, var(--card-accent) 85%, black 15%);
+            }
         }
     }
 

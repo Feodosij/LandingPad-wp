@@ -26,16 +26,17 @@
             margin: 0;
             color: $main-black;
 
-            &::after {
-                content: '';
+            svg {
                 position: absolute;
                 top: -15px;
                 right: -42px;
                 width: 40px;
                 height: 40px;
-                background-image: url('data:image/svg+xml,<svg width="39" height="39" viewBox="0 0 39 39" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M18.3663 36.7327C22.5247 36.7327 29.802 36.3895 36.7327 36.3895M12.1287 27.468L26.6832 9.62482M1.73267 24.3797C1.73267 23.2817 1.73267 8.82417 1.73267 1.73266" stroke="%230F38B4" stroke-width="3.46535" stroke-linecap="round" /></svg>');
-                background-repeat: no-repeat;
-                background-size: contain;
+                object-fit: contain;
+
+                path {
+                    stroke: var(--accent-font);
+                }
 
                 @media (max-width: $tablet) {
                     width: 32px;
@@ -90,7 +91,7 @@
 
 .contact-card {
     padding: 1.25rem 1.25rem 2rem;
-    background-color: #F9FBFF;
+    background-color: var(--accent-bg-light);
     border-radius: 8px;
 
     display: flex;
@@ -113,7 +114,7 @@
     &__content {
         .contact-link {
             text-decoration: none;
-            color: $text-blue;
+            color: var(--accent-font);;
             font-family: $font-futura;
             font-weight: 400;
             font-size: 1.125rem;

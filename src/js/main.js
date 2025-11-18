@@ -15,34 +15,25 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // mobile menu, burger
-    const burger = document.querySelector( '#burger' );
-    const mobileMenu = document.querySelector( '#mobile-menu' );
+    const burger = document.querySelector('#burger');
+    const menuOverlay = document.querySelector('#js-menu-overlay');
     const body = document.body;
 
-    const menuOverlay = document.querySelector('#js-menu-overlay');
-
-    if ( burger && mobileMenu ) {
-        burger.addEventListener( 'click', () => {
-            burger.classList.toggle( 'is-active' );
-            mobileMenu.classList.toggle( 'is-open' );
+    if (header && burger && menuOverlay) {
+        burger.addEventListener('click', () => {
+            const isOpen = header.classList.toggle('mobile-menu-open');
+            burger.setAttribute('aria-expanded', isOpen);
             body.classList.toggle( 'no-scroll' );
-
-            menuOverlay.classList.toggle('is-open');
-
-            const isExpanded = burger.classList.contains( 'is-active' );
-            burger.setAttribute( 'aria-expanded', isExpanded );
         });
 
         menuOverlay.addEventListener('click', () => {
-            burger.classList.remove('is-active');
-            mobileMenu.classList.remove('is-open');
-            menuOverlay.classList.remove('is-open');
-            body.classList.remove('no-scroll');
+            header.classList.remove('mobile-menu-open');
             burger.setAttribute('aria-expanded', 'false');
+            body.classList.remove( 'no-scroll' );
         });
     }
 
-    
+
     const parentLinks = document.querySelectorAll('.mobile-menu .menu-item-has-children > a');
 
     parentLinks.forEach((link) => {

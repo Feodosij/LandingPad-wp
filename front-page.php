@@ -6,12 +6,19 @@
 
 get_header(); 
 
-$hero_bg = get_field('background_image');
+$GLOBALS['accent_bg'] = '#DBEBFF';
+$GLOBALS['accent_font'] = '#0F38B4';
+$GLOBALS['accent_blur'] = '#3060C9';
+$GLOBALS['accent_bg_light'] = '#F9FBFF';
 
+$hero_bg = get_field('background_image');
+if ( $hero_bg ) {
+    $background_style = 'style="background-image: url(' . esc_url($hero_bg) . ');"';
+}
 ?>
 
 <main>
-    <section class="hero" style="<?php echo $hero_bg ? 'background-image: url(' . esc_url($hero_bg) . ');' : ''; ?>">
+    <section class="hero" <?php echo $background_style; ?>>
         <div class="hero__container container">
             <div class="hero__content">
                 <?php if ( $main_title = get_field('main_title') ) { ?>
@@ -55,7 +62,7 @@ $hero_bg = get_field('background_image');
                             <?php } ?>
                             
                             <div class="hero-card__btn-wrapper">
-                                <div class="hero-card__btn">Learn more</div>
+                                <a href="<?php echo esc_url( $link_url ); ?>" class="hero-card__btn">Learn more</a>
                             </div>
                         </div>
                     <?php } ?>
