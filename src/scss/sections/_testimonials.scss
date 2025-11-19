@@ -1,0 +1,178 @@
+@use '../base/variables' as *;
+
+.testimonials {
+    padding: 6.25rem 0;
+    background-color: #fff;
+
+    @media (max-width: $tablet) {
+        padding: 3rem 0;
+    }
+
+    @media (max-width: $tablet-sm) {
+        padding: 2rem 0;
+    }
+
+    &__slider {
+        position: relative;
+        padding: 0 3rem;
+        display: flex;
+        justify-content: space-between;
+
+        @media (max-width: $tablet-sm) {
+            flex-direction: column;
+            padding: 1rem;
+        }
+
+        @media (max-width: $mobile) {
+            padding: 0;
+        }
+        
+        .slick-track {
+            display: flex;
+            align-items: center;
+        }
+
+        .slick-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            &.slick-next {
+                right: 0;
+            }
+
+            &.slick-prev {
+                left: 0;
+            }
+
+            svg {
+                width: 32px;
+                height: 32px;
+                path {
+                    stroke: $main-blue;
+                }
+            }
+        }
+
+        .slick-dots {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            list-style: none;
+            align-items: center;
+            width: fit-content;
+            margin: 0 auto;
+            
+            li {
+                button {
+                    font-size: 0;
+                    width: 10px;
+                    height: 10px;
+                    background: transparent;
+                    border-radius: 50%;
+                    border: none;
+                    padding: 0;
+                    border: 1px solid $text-blue;
+                }
+
+                &.slick-active button {
+                    background: $text-blue;
+                }
+            }
+        }
+    }
+
+    &__item {
+        padding: 1.188rem; 
+
+        @media (max-width: $mobile) {
+            padding: 0;
+        }
+    }
+
+    .testimonial-card {
+        background: #fff;
+        border-radius: 16px;
+        box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.1);
+        padding: 1rem;
+        height: 100%;
+
+        &__header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 4px;
+        }
+
+        &__name {
+            font-family: $font-futura;
+            font-weight: 500;
+            font-size: 0.875rem;
+            line-height: 27px;
+            margin-bottom: 0.25rem;
+            color: #000;
+            padding-left: 0.75rem;
+            position: relative;
+
+            &::before {
+                content: '';
+                position: absolute;
+                left: 0;
+                top: 50%;
+                transform: translateY(-50%);
+                width: 5.03px;
+                height: 5.03px;
+                background-color: $main-blue;
+                border-radius: 50%;
+            }
+        }
+
+        &__job {
+            font-family: $font-gilroy;
+            font-size: 0.75rem;
+            color: #757575;
+            font-weight: 300;
+            margin: 0;
+            padding-left: 0.75rem;
+        }
+
+        &__rating {
+            display: flex;
+            gap: 5px;
+            
+            .star {
+                font-size: 1.2rem;
+                line-height: 1;
+                width: 13px;
+                height: 13px;
+                
+                &.filled {
+                    color: $main-blue;
+                }
+                
+                &.empty {
+                    color: #e0e0e0;
+                }
+            }
+        }
+
+        &__text {
+            font-family: $font-gilroy;
+            font-weight: 400;
+            font-size: 0.875rem;
+            line-height: 1.6;
+            color: #000;
+            padding-left: 0.75rem;
+            
+            p {
+                margin: 0;
+            }
+        }
+    }
+}

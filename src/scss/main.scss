@@ -1,0 +1,54 @@
+// base
+@use './base/variables' as *;
+@use './base/reset';
+@use './base/fonts';
+
+// layout
+@use './layout/header';
+@use './layout/footer';
+
+// sections
+@use './sections/hero';
+@use './sections/our_story';
+@use './sections/testimonials';
+@use './sections/team';
+@use './sections/contacts';
+
+body {
+    font-family: $font-gilroy;
+    font-weight: 400;
+    color: $main-black;
+}
+
+body.no-scroll {
+    overflow: hidden;
+}
+
+.site {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    flex-grow: 1;
+}
+
+.container {
+    width: 100%;
+    max-width: calc( var(--container-width) + (var(--container-padding-x) * 2));
+    margin-inline: auto;
+    padding-inline: var(--container-padding-x);
+
+    @media (max-width: $desktop-sm) {
+        --container-padding-x: 48px;
+    }
+
+    @media (max-width: $tablet-sm) {
+        --container-padding-x: 32px;
+    }
+
+    @media (max-width: $mobile) {
+        --container-padding-x: 16px;
+    }
+}
