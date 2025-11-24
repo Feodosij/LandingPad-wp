@@ -151,18 +151,15 @@
         padding-bottom: 17px;
         border-top: 2px solid #F2F6FF;
     }
-
-    &__details[open] {
-        .accordion__title {
-            color: $text-blue;
-        }
-
-        .accordion__icon {
-            transform: rotate(180deg);
-        }
-    }
 }
 
+.accordion__details[open] .accordion__title {
+    color: $text-blue;
+}
+
+.accordion__details[open] .accordion__icon {
+    transform: rotate(180deg);
+}
 
 aside {
     .single-aside {

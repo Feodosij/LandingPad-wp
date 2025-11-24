@@ -6,11 +6,11 @@
 // layout
 @use './layout/header';
 @use './layout/footer';
-@use './layout/header_light_style';
+@use './layout/header-light-style';
 
 // sections
 @use './sections/hero';
-@use './sections/our_story';
+@use './sections/our-story';
 @use './sections/testimonials';
 @use './sections/team';
 @use './sections/contacts';

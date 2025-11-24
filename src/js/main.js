@@ -47,23 +47,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // default open one accordion
-    if (window.location.hash) {
-        const targetId = window.location.hash;
-        const targetElement = document.querySelector(targetId);
+    const TARGET_PAGE_CLASS = 'single-services';
+    const isTargetPage = document.body.classList.contains(TARGET_PAGE_CLASS);
 
-        if (targetElement && targetElement.tagName === 'DETAILS') {
-            targetElement.setAttribute('open', true);
-        } 
+    if (isTargetPage) {
+        if (window.location.hash) {
+            const targetId = window.location.hash;
+            const targetElement = document.querySelector(targetId);
 
-    } else {
-        const allAccordions = document.querySelectorAll(".accordion__details");
+            if (targetElement && targetElement.tagName === 'DETAILS') {
+                targetElement.setAttribute('open', true);
+            } 
 
-        if (allAccordions.length === 0) {
-            return; 
+        } else {
+            const allAccordions = document.querySelectorAll(".accordion__details");
+
+            if (allAccordions.length === 0) {
+                return; 
+            }
+
+            const first = allAccordions[0];
+            first.setAttribute("open", true);
         }
-
-        const first = allAccordions[0];
-        first.setAttribute("open", true);
     }
 
     addInstagramOverlayText();
