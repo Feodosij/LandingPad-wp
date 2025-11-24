@@ -6,7 +6,7 @@
 $our_story_bg = get_field('our_story_image', 'option');
 ?>
 
-<section class="our-story">
+<section class="our-story" id="our_story">
     <div class="container">
         <div class="our-story__content">
             <?php if ( $our_story_title = get_field('our_story_title', 'option') ) { ?>

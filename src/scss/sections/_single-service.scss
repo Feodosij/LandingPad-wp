@@ -1,0 +1,262 @@
+@use '../base/variables' as *;
+
+.single-service {
+    padding-top: 4.875rem;
+    margin-bottom: 6.25rem;
+
+    @media (max-width: $tablet) {
+        margin-bottom: 4rem;
+        padding-top: 3.5rem;
+    }
+
+    @media (max-width: $mobile) {
+        margin-bottom: 3.5rem;
+        padding-top: 3rem;
+    }
+
+    &__title {
+        font-family: $font-futura;
+        font-weight: 500;
+        font-size: 2rem;
+        line-height: 100%;
+        margin-bottom: 2.688rem;
+        position: relative;
+        width: fit-content;
+
+        @media (max-width: $mobile) {
+            margin-bottom: 2rem;
+        }
+
+        svg {
+            position: absolute;
+            top: -36px;
+            right: -33px;
+            width: 40px;
+            height: 40px;
+            z-index: 1;
+
+            path {
+                stroke: $main-blue;
+            }
+        
+            @media (max-width: $tablet) {
+                top: -22px;
+                right: -35px;
+                width: 36px;
+                height: 36px;
+            }
+
+            @media (max-width: $mobile) {
+                top: -20px;
+                right: -33px;
+                width: 32px;
+                height: 32px;
+            }
+        }
+    }
+
+    &__wrapper {
+        display: grid;
+        grid-template-columns: 1fr 305px;
+        gap: 40px;
+
+        @media (max-width: $tablet) {
+            grid-template-columns: 1fr 240px;
+            gap: 16px;
+        }
+
+        @media (max-width: $tablet-sm) {
+            grid-template-columns: 1fr;
+            gap: 32px;
+        }
+    }
+}
+
+.accordion {
+    box-shadow: 0px 14px 28px 0px #CBCBCB40;
+    margin-bottom: 1rem;
+    background: #fff;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+
+    & > summary::-webkit-details-marker {
+        display: none;
+    }
+
+    &__summary {
+        list-style: none;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+        padding: 27px 38px 14px 32px;
+
+        @media (max-width: $mobile) {
+            padding: 20px 16px 14px 16px
+        }
+    }
+
+    &__title {
+        font-family: $font-futura;
+        font-weight: 500;
+        font-size: 1.25rem;
+        line-height: 100%;
+        color: $main-black;
+        border-bottom: 1px;
+        transition: all 0.4s ease;
+    }
+
+    &__icon {
+        width: 24px;
+        height: 14px;
+        object-fit: contain;
+        
+        display: inline-block;
+        transform-origin: center;
+        transition: all 0.4s ease;
+
+        @media (max-width: $mobile) {
+            width: 20px;
+            height: 10px;
+        }
+    }
+
+    &__content {
+        display: grid;
+        grid-template-rows: 0fr;
+        transition-duration: 0.4s;
+        margin-right: 38px;
+        margin-left: 32px;
+        border-top: 2px solid transparent;
+
+        @media (max-width: $mobile) {
+            margin-right: 16px;
+            margin-left: 16px;
+        }
+    }
+
+    &__content-body {
+        overflow: hidden;
+        font-family: $font-futura;
+        font-weight: 400;
+        font-size: 1rem;
+        line-height: 26px;
+    }
+
+    &__details[open] + &__content {
+        grid-template-rows: 1fr;
+        padding-top: 16px;
+        padding-bottom: 17px;
+        border-top: 2px solid #F2F6FF;
+    }
+
+    &__details[open] {
+        .accordion__title {
+            color: $text-blue;
+        }
+
+        .accordion__icon {
+            transform: rotate(180deg);
+        }
+    }
+}
+
+
+aside {
+    .single-aside {
+        background-color: #fff;
+        box-shadow: 0px -1px 28px 0px #CBCBCB40;
+        padding: 20px 17px 30px 15px;
+        margin-bottom: 1rem;
+        border-radius: 11px;
+
+        &__title {
+            font-family: $font-gilroy;
+            font-weight: 400;
+            font-size: 2rem;
+            line-height: 100%;
+            margin-bottom: 2rem;
+            text-align: center;
+
+            @media (max-width: $tablet-sm) {
+                margin-bottom: 1.5rem;
+                font-size: 1.5rem;
+            }
+        }
+
+        &__list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        &__item {
+            margin-bottom: 11px;
+            border-radius: 4px;
+            transition: all 0.4s ease;
+
+            &.is_active {
+                background-color: $main-blue;
+
+                .single-aside__link {
+                    color: #fff;
+                }
+            }
+
+            &:hover {
+                background-color: $main-blue; 
+
+                .single-aside__link {
+                    color: #fff;
+                }
+            }
+        }
+
+        &__thumbnail {
+            width: 20px!important;
+            height: 20px;
+            object-fit: contain;
+        }
+
+        &__link {
+            font-family: $font-futura;
+            font-weight: 500;
+            font-size: 1rem;
+            line-height: 100%;
+            color: $main-black;
+            text-decoration: none;
+
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 16px;
+            transition: all 0.4s ease;
+
+            &:link,
+            &:visited {
+                color: $main-black; 
+            }
+        }
+    }
+
+    .default-card {
+        padding: 16px 24px;
+        min-height: 116px;
+
+        @media (max-width: $tablet-sm) {
+            display: none;
+        }
+
+        &__title {
+            font-weight: 400;
+            font-size: 1.125rem;
+            margin-bottom: 11px;
+        }
+
+        &__link {
+            padding: 9px 16px;
+        }
+    }
+}

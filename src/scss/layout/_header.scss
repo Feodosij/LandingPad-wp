@@ -310,6 +310,10 @@
         width: 100%;
     }
 
+    @media (min-width: 993px) {
+        display: none !important; 
+    }
+
     &__list {
         list-style: none;
         padding: 0;

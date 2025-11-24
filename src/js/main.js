@@ -44,7 +44,50 @@ document.addEventListener('DOMContentLoaded', () => {
             parentLi.classList.toggle('is-open');
         });
     });
+
+
+    // default open one accordion
+    if (window.location.hash) {
+        const targetId = window.location.hash;
+        const targetElement = document.querySelector(targetId);
+
+        if (targetElement && targetElement.tagName === 'DETAILS') {
+            targetElement.setAttribute('open', true);
+        } 
+
+    } else {
+        const allAccordions = document.querySelectorAll(".accordion__details");
+
+        if (allAccordions.length === 0) {
+            return; 
+        }
+
+        const first = allAccordions[0];
+        first.setAttribute("open", true);
+    }
+
+    addInstagramOverlayText();
 });
+
+// add "View post" text to instagram card overlay 
+function addInstagramOverlayText() {
+    const instagramItems = document.querySelectorAll('#sb_instagram #sbi_images .sbi_item');
+    
+    instagramItems.forEach(item => {
+        const photoWrap = item.querySelector('.sbi_photo_wrap');
+
+        if (photoWrap) {
+            if (!item.querySelector('.sbi_overlay_text')) { 
+                const viewPostText = document.createElement('span');
+                viewPostText.className = 'sbi_overlay_text';
+                viewPostText.textContent = 'View post';
+
+                photoWrap.appendChild(viewPostText);
+            }
+        }
+    });
+}
+
 
 jQuery(function($) {    
     // slick slider

@@ -133,7 +133,15 @@ if ( $hero_bg ) {
 
 
     <!-- section Contacts -->
-     <?php get_template_part( 'template-parts/section', 'contacts'); ?>
+    <?php get_template_part( 'template-parts/section', 'contacts'); ?>
+
+
+    <!-- section Book a call -->
+    <?php get_template_part( 'template-parts/section', 'book-a-call'); ?>
+
+
+    <!-- section Instagram -->
+    <?php get_template_part( 'template-parts/section', 'instagram'); ?>
 
      
 </main>

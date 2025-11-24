@@ -18,7 +18,7 @@ $accent_bg_light = isset($GLOBALS['accent_bg_light']) ? $GLOBALS['accent_bg_ligh
 $accent_font = isset($GLOBALS['accent_font']) ? $GLOBALS['accent_font'] : '#0F38B4';
 ?>
 
-<section class="contacts" style="--accent-font: <?php echo esc_attr( $accent_font ); ?>; --accent-bg-light: <?php echo esc_attr( $accent_bg_light ); ?>;">
+<section class="contacts" id="contacts" style="--accent-font: <?php echo esc_attr( $accent_font ); ?>; --accent-bg-light: <?php echo esc_attr( $accent_bg_light ); ?>;">
     <div class="container">
         <?php if ( $title ) {?>
             <div class="contacts__title">

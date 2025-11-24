@@ -1,0 +1,305 @@
+@use '../base/variables' as *;
+
+.services {
+    margin-bottom: 6.24rem;
+
+    @media (max-width: $tablet) {
+        margin-bottom: 4rem;
+    }
+
+    @media (max-width: $mobile) {
+        margin-bottom: 2rem;
+    }
+
+    &__header {
+        margin-bottom: 2.5rem;
+        color: $main-black;
+        text-align: center;
+        font-family: $font-futura;
+
+        @media (max-width: $mobile) {
+            margin-bottom: 2rem;
+        }
+    }
+
+    &__title {
+        font-weight: 500;
+        font-size: 3.375rem;
+        line-height: 100%;
+        margin:0 auto 1rem;
+        width: fit-content;
+        position: relative;
+
+        span {
+            color: $text-blue;
+        }
+
+        @media (max-width: $tablet) {
+            font-size: 2.7rem;
+        }
+
+        @media (max-width: $mobile) {
+            font-size: 2rem;
+        }
+
+        svg {
+            position: absolute;
+            top: -23px;
+            right: -38px;
+            width: 40px;
+            height: 40px;
+            z-index: 1;
+
+            path {
+                stroke: var(--accent_font);
+            }
+        
+            @media (max-width: $tablet) {
+                top: -22px;
+                right: -35px;
+                width: 36px;
+                height: 36px;
+            }
+
+            @media (max-width: $mobile) {
+                top: -20px;
+                right: -33px;
+                width: 32px;
+                height: 32px;
+            }
+        }
+    }
+
+    &__subtitle {
+        font-weight: 500;
+        font-size: 2rem;
+        line-height: 42px;
+        text-align: center;
+        margin-bottom: 0.56rem;
+
+        @media (max-width: $tablet) {
+            font-size: 1.8rem;
+        }
+
+        @media (max-width: $mobile) {
+            font-size: 1.4rem;
+            line-height: 28px;
+        }
+    }
+
+    &__text {
+        font-weight: 300;
+        font-size: 0.927rem;
+        line-height: 100%;
+        text-align: start;
+        color: #000;
+    }
+
+    &__grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 31px;
+
+        @media (max-width: $desktop-sm) {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        @media (max-width: $tablet) {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        @media (max-width: $mobile) {
+            grid-template-columns: 1fr;
+        }
+    }
+}
+
+.service-card {
+    min-height: 380px;
+    padding: 26px 20px;
+    box-shadow: 0px 3px 28px 0px rgba(203, 203, 203, 0.25);
+    border-radius: 8px;
+    background-color: #fff;
+    transition: all 0.6s ease;
+    min-height: 380px;
+    min-width: 0;
+    
+    &__header {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        padding-bottom: 1.5rem;
+        margin-bottom: 1.5rem;
+        transition: all 0.3s ease;
+        border-bottom: 1px solid #4950ED;
+    }
+
+    &__thumbnail {
+        img {
+            width: 42px;
+            height: 42px;
+            object-fit: contain;
+        }
+    }
+
+    &__title {
+        font-family: $font-futura;
+        font-weight: 500;
+        font-size: 1.25rem;
+        line-height: 100%;
+        letter-spacing: 0%;
+
+        a {
+            text-decoration: none;
+            color: #000;
+            transition: all 0.3s ease;
+        }
+    }
+
+    &__list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    &__item {
+        word-wrap: break-word; 
+        overflow-wrap: break-word;
+        margin-bottom: 20px;
+    }
+
+    &__item-link {
+        color: $main-black;
+        text-decoration: none;
+        position: relative;
+        display: block;
+        padding-right: 24px;
+        transition: all 0.3s ease;
+
+        svg {
+            width: 16px;
+            height: 16px;
+            position: absolute;
+            flex-shrink: 0;
+            top: 4px;
+            right: 0;
+            transition: all 0.3s ease;
+        }
+
+        &:link,
+        &:visited {
+            color: $main-black; 
+        }
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+
+
+    &:hover {
+        background-color: $main-blue;
+        color: #fff;
+
+        .service-card__header {
+            border-bottom: 1px solid #fff;
+        }
+
+        .service-card__title {
+            a {
+                color: #fff;
+            }
+        }
+
+        .service-card__item-link {
+            color: #fff;
+
+            svg {
+                path {
+                    fill: #fff;
+                }
+            }
+        }
+    }
+}
+
+.default-card {
+    border-radius: 8px;
+    background-color: $main-blue;
+    position: relative;
+    overflow: hidden;
+    padding: 92px 35px 35px;
+    min-height: 380px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+    &__background {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        z-index: 1;
+        background: rgba(41, 103, 240, 0.8);
+
+    }
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(41, 103, 240, 0.8);
+        z-index: 2;
+    }
+
+    &__content {
+        display: flex;
+        flex-direction: column;
+        font-family: $font-futura;
+    }
+
+    &__title {
+        font-weight: 500;
+        font-size: 1.5rem;
+        line-height: 32px;
+        text-align: center;
+        color: #fff;
+        z-index: 3;
+        margin-bottom: 19px;
+    }
+
+    &__link {
+        display: inline-block;
+        z-index: 3;
+        box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.1);
+        background-color: #fff;
+        text-decoration: none;
+        padding: 14px;
+        border-radius: 8px;
+        width: 100%;
+        transition: all 0.3s ease;
+
+        font-weight: 500;
+        font-size: 18px;
+        line-height: 29px;
+        text-align: center;
+        color: $text-blue;
+
+        &:link,
+        &:visited {
+            color: $text-blue; 
+        }
+
+        &:hover {
+            color: #fff;
+            background-color: #1F52C5;
+        }
+    }
+}

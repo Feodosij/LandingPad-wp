@@ -6,6 +6,7 @@
 // layout
 @use './layout/header';
 @use './layout/footer';
+@use './layout/header_light_style';
 
 // sections
 @use './sections/hero';
@@ -13,6 +14,11 @@
 @use './sections/testimonials';
 @use './sections/team';
 @use './sections/contacts';
+@use './sections/book-a-call';
+@use './sections/instagram';
+@use './sections/hero-services';
+@use './sections/services';
+@use './sections/single-service';
 
 body {
     font-family: $font-gilroy;
