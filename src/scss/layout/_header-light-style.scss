@@ -1,0 +1,53 @@
+@use '../base/variables' as *;
+
+.header_light_style {
+    .header {
+        position: relative;
+        background-color: #fff;
+        box-shadow: 0 -1px 28px 0 rgba(203, 203, 203, 0.25);
+    }
+    
+    .header__logo svg path {
+        fill: $main-blue;
+    }
+
+    .burger {
+        .burger__line {
+            background-color: $main-black;
+        }
+    }
+
+    .header__menu .menu-item-has-children {
+        padding-right: 1.5rem;
+
+        &::after {
+            opacity: 1;
+            transform: translateY(-50%) rotate(180deg);
+        }
+        
+        &:hover::after {
+            transform: translateY(-50%) rotate(0deg);
+        }
+    }
+
+    .header__menu {
+        .menu-item {
+            a {
+                color: $main-black;
+            }
+
+            &:hover > a {
+                color: $main-blue;
+            }
+        }
+
+        .menu-button {
+            a {
+                color: #fff;
+            }
+            &:hover > a {
+                color: #fff;
+            }
+        }
+    }
+}

@@ -1,15 +1,15 @@
 @use '../base/variables' as *;
 
 .testimonials {
-    padding: 6.25rem 0;
+    margin-bottom: 6.25rem;
     background-color: #fff;
 
     @media (max-width: $tablet) {
-        padding: 3rem 0;
+        margin-bottom: 4rem ;
     }
 
     @media (max-width: $tablet-sm) {
-        padding: 2rem 0;
+        margin-bottom: 2rem;
     }
 
     &__slider {

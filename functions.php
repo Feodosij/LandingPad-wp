@@ -336,6 +336,58 @@ if ( function_exists('acf_add_options_page') ) {
         'capability'    => 'edit_posts',
         'redirect'      => false,
         'icon_url'      => 'dashicons-admin-generic',
-        'position'      => 28
+        'position'      => 29
     ));
 }
+
+// remove defaults tag cf7
+add_filter( 'wpcf7_autop_or_not', '__return_false' );
+
+// CPT Services
+function landingpad_register_services_cpt() {
+	$labels = array(
+		'name' => 'Services',
+		'singular_name' => 'Service',
+		'menu_name' => 'Services',
+		'add_new' => 'Add new service',
+		'add_new_item' => 'Add new service',
+
+	);
+	$args = array(
+		'labels' => $labels,
+		'public' => true,
+		'has_archive' => false,
+		'publicly_queryable' => true,
+		'show_ui' => true,
+		'show_in_menu' => true,
+		'menu_icon' => 'dashicons-buddicons-activity',
+		'supports' => array( 'title', 'thumbnail', 'page-attributes' ),
+		'menu_position' => 28,
+
+		'rewrite' => array( 'slug' => 'services' ),
+	);
+	register_post_type( 'services', $args );
+}
+add_action( 'init', 'landingpad_register_services_cpt' );
+
+// added lazy-loading to thumbnail
+function add_lazy_load_to_post_thumbnail($html) {
+    if ( strpos( $html, 'loading=' ) === false ) {
+        $html = str_replace('<img', '<img loading="lazy"', $html);
+    }
+    return $html;
+}
+add_filter('post_thumbnail_html', 'add_lazy_load_to_post_thumbnail', 10, 1);
+
+// change menu style for some page
+add_filter( 'body_class', function( $classes ) {
+
+    if ( is_singular( 'services' ) ) {
+        $classes[] = 'header_light_style';
+    }
+
+    return $classes;
+});
+
+// remove default sending mail cf7 (for test sending)
+add_filter( 'wpcf7_skip_mail', '__return_true' );

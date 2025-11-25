@@ -1,0 +1,185 @@
+@use '../base/variables' as *;
+
+.book-call {
+    background-color: var(--accent_bg_light);
+    padding: 3rem 2rem 2rem;
+    margin-bottom: 6.25rem;
+
+    @media (max-width: $tablet) {
+        margin-bottom: 4rem;
+    }
+
+    @media (max-width: $mobile) {
+        margin-bottom: 3.5rem;
+    }
+
+    &__header {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 1.5rem;
+    }
+
+    &__title {
+        font-family: $font-gilroy;
+        font-weight: 500;
+        font-size: 2rem;
+        line-height: 100%;
+        color: #000;
+        position: relative;
+
+        @media (max-width: $tablet) {
+            font-size: 1.5rem;
+        }
+
+        span {
+            color: var(--accent_font);
+        }
+
+        svg {
+            position: absolute;
+            top: -18px;
+            left: -18px;
+            width: 23px;
+            height: 24px;
+
+            path {
+                stroke: var(--accent_font);
+            }
+        }
+    }
+
+    &__form-wrapper {
+        max-width: 30.375rem;
+        width: 100%;
+        margin: 0 auto;
+
+        .wpcf7-form {
+            display: flex;
+            flex-direction: column;
+            gap: 44px;
+
+            @media (max-width: $tablet) {
+                gap: 28px;
+            }
+        }
+    }
+
+    label {
+        font-family: $font-futura-pt;
+        font-weight: 400;
+        font-size: 0.875rem;
+        line-height: 150%;
+        color: var(--accent_font);
+
+        display: block;
+        position: relative;
+    }
+
+    .label_text {
+        position: absolute;
+        left: 8px;
+        top: -12px;
+        z-index: 1;
+        background-color: #fff;
+    }
+
+    .wpcf7-form-control:not(.wpcf7-submit) {
+        width: 100%;
+        padding: 12px 15px;
+        border: 1px solid var(--accent_font);
+        border-radius: 4px;
+        font-size: 16px;
+        line-height: 1.5;
+        color: #000;
+        background-color: var(--accent_bg_light);
+        caret-color: var(--accent_font);
+
+        &:focus {
+            outline: none;
+            border: 2px solid var(--accent_font);
+            caret-color: var(--accent_font);
+        }
+
+        &::placeholder {
+            color: #C4C4C4;
+        }
+    }
+
+    .wpcf7-textarea {
+        max-height: 96px;
+    }
+
+    .wpcf7-submit {
+        width: 100%;
+        background-color: #D1E7FF;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        padding: 15px 20px;
+        font-size: 1.125rem;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        
+        &:hover {
+            background-color: var(--accent_font);
+        }
+
+        &.has-spinner {
+            position: relative;
+        }
+    }
+
+
+    .field_wrapper:has(.wpcf7-not-valid) {
+        .label_text {
+            color: #FF9D9D !important; 
+        }
+    }
+
+    .wpcf7-not-valid {
+        border-color: #FF9D9D !important;
+    }
+
+    .wpcf7-response-output.wpcf7-display-none.wpcf7-validation-errors {
+        border: none;
+        padding: 0; 
+        margin-top: 5px;
+    }
+
+    .wpcf7-not-valid-tip {
+        font-size: 14px;
+        color: #FF9D9D;
+        display: block;
+        margin-top: 5px;
+        position: relative;
+        
+        &::before {
+            content: "";
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            margin-right: 4px;
+
+            background-image: url('data:image/svg+xml,<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M6.66325 1.67089C7.26875 0.50977 8.73134 0.509768 9.33685 1.67089L14.9755 12.4835C15.5989 13.6791 14.8504 15.2 13.6387 15.2H2.36142C1.14965 15.2 0.401167 13.6791 1.02462 12.4835L6.66325 1.67089ZM7.20005 9.20005V5.20005H8.80005V9.20005H7.20005ZM8.00005 12.8C7.33731 12.8 6.80005 12.2628 6.80005 11.6C6.80005 10.9373 7.33731 10.4 8.00005 10.4C8.66279 10.4 9.20005 10.9373 9.20005 11.6C9.20005 12.2628 8.66279 12.8 8.00005 12.8Z" fill="%23FF4A4A" /></svg>'); // Укажите правильный путь!
+            background-repeat: no-repeat;
+            background-size: contain;
+            background-position: center;
+        }
+    }
+
+    .wpcf7-form-control-wrap {
+        line-height: 0;
+        font-size: 0;
+        vertical-align: top;
+    }
+
+     .wpcf7-spinner {
+        display: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .wpcf7-response-output {
+        margin: initial;
+    }
+}

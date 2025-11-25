@@ -36,7 +36,7 @@
     "src": "src/fonts/Gilroy-Regular.woff2"
   },
   "src/js/main-legacy.js": {
-    "file": "assets/main-legacy-BgVemD-P.js",
+    "file": "assets/main-legacy-DojUC7C-.js",
     "name": "main",
     "src": "src/js/main-legacy.js",
     "isEntry": true,
@@ -45,12 +45,12 @@
     ]
   },
   "src/js/main.js": {
-    "file": "assets/main-DYPbESpH.js",
+    "file": "assets/main-DDmQrJ0n.js",
     "name": "main",
     "src": "src/js/main.js",
     "isEntry": true,
     "css": [
-      "assets/styles-vILqSZXt.css"
+      "assets/styles-BhNZt2NY.css"
     ],
     "assets": [
       "assets/Gilroy-Regular-CY081Tb4.woff2",
@@ -65,7 +65,7 @@
     ]
   },
   "src/scss/main-legacy.scss": {
-    "file": "assets/styles-legacy-DsDw-GTe.js",
+    "file": "assets/styles-legacy-n5msE424.js",
     "name": "styles",
     "src": "src/scss/main-legacy.scss",
     "isEntry": true,
@@ -82,7 +82,7 @@
     ]
   },
   "src/scss/main.scss": {
-    "file": "assets/styles-vILqSZXt.css",
+    "file": "assets/styles-BhNZt2NY.css",
     "src": "src/scss/main.scss",
     "isEntry": true
   },

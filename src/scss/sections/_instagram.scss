@@ -1,0 +1,199 @@
+@use '../base/variables' as *;
+
+.instagram {
+    &__header {
+        margin-bottom: 3.75rem;
+        display: flex;
+        justify-content: center;
+
+        @media (max-width: $tablet) {
+            margin-bottom: 2.5rem;
+        }
+
+        @media (max-width: $mobile) {
+            margin-bottom: 1.875rem;
+        }
+    }
+
+    &__title {
+        font-family: $font-futura;
+        font-weight: 500;
+        font-size: 3.375rem;
+        line-height: 100%;
+        position: relative;
+
+        @media (max-width: $tablet) {
+            font-size: 2.5rem;
+        }
+
+        @media (max-width: $mobile) {
+            font-size: 1.875rem;
+        }
+
+        svg {
+            position: absolute;
+            top: -25px;
+            right: -38px;
+            width: 40px;
+            height: 40px;
+            object-fit: contain;
+
+            path {
+                stroke: var(--accent_font);
+            }
+
+            @media (max-width: $tablet) {
+                width: 32px;
+                height: 32px;
+                top: -18px;
+                right: -29px;
+            }
+
+            @media (max-width: $mobile) {
+                width: 28px;
+                height: 28px;
+                right: -27px;
+            }
+        }
+    }
+
+    #sb_instagram {
+        max-width: 994px;
+        max-height: 310px;
+        overflow: visible;
+
+        .sbi_item { 
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            cursor: pointer;
+            
+            .sbi_info {
+                display: none !important; 
+            }
+        
+            .sbi_photo {
+                transition: opacity 0.3s ease; 
+                filter: none !important;
+                opacity: 1 !important;
+                transform: none !important;
+            }
+            
+           .sbi_photo_wrap { 
+                position: relative;
+                width: 100%;
+                height: 100%;
+                text-decoration: none;
+                z-index: 10;
+                
+                // overlay
+                &::before {
+                    content: ""; 
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background-color: rgba(41, 103, 240, 0.8);
+                    opacity: 0;
+                    transition: opacity 0.3s ease;
+                    z-index: 5;
+                    pointer-events: none;
+                }
+
+                // icon overlay
+                &::after { 
+                    content: ""; 
+                    display: block; 
+                    width: 25px; 
+                    height: 25px; 
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -20px);
+                    
+                    background-image: url('data:image/svg+xml,<svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M13.7805 11.6602L22.4729 2.96777" stroke="white" stroke-width="1.59007" stroke-linecap="round" stroke-linejoin="round" /><path d="M23.3211 7.20835V2.12012H18.2329" stroke="white" stroke-width="1.59007" stroke-linecap="round" stroke-linejoin="round" /><path d="M11.6605 2.12012H9.54045C4.24021 2.12012 2.12012 4.24021 2.12012 9.54045V15.9007C2.12012 21.201 4.24021 23.3211 9.54045 23.3211H15.9007C21.201 23.3211 23.3211 21.201 23.3211 15.9007V13.7806" stroke="white" stroke-width="1.59007" stroke-linecap="round" stroke-linejoin="round" /></svg>');
+                    background-repeat: no-repeat;
+                    background-size: contain;
+                    background-position: center;
+                    
+                    opacity: 0;
+                    transition: opacity 0.3s ease;
+                    pointer-events: none;
+                    z-index: 15;
+                }
+
+                // text View post
+                .sbi_overlay_text {
+                    font-family: $font-futura;
+                    font-weight: 500;
+                    font-size: 1.2rem;
+                    line-height: 100%;
+                    color: white;
+                    text-align: center;
+                    opacity: 0;
+                    transition: opacity 0.3s ease;
+                    pointer-events: none;
+                    z-index: 15;
+
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, 20px);
+                }
+            }
+
+            &:hover {
+                .sbi_photo_wrap {
+                    &::before {
+                        opacity: 1;
+                    }
+
+                    &::after {
+                        opacity: 1;
+                    }
+                    .sbi_overlay_text {
+                        opacity: 1;
+                    }
+                    
+                    .sbi_photo { 
+                        opacity: 1 !important; 
+                        transform: none !important;
+                        filter: none !important;
+                    }
+                }
+            }
+        }
+
+        .sbi_photo_wrap {
+            .sbi_photo {
+                opacity: 1 !important;
+
+                @media (max-width: $mobile) {
+                    height: auto !important;
+                }
+            }
+
+            img {
+                max-height: 310px;
+                border-radius: 12px;
+            }
+        }
+    }
+
+    #sbi_load {
+        margin-bottom: 56px;
+
+        @media (max-width: $tablet) {
+            margin-bottom: 42px;
+        }
+
+        @media (max-width: $mobile) {
+            margin-bottom: 32px;
+        }
+        
+        svg {
+            display: none !important;
+        }
+    }
+}

@@ -21,7 +21,7 @@ $team_query = new WP_Query( array(
 
 if ( $team_query->have_posts() ) { ?>
 
-    <section class="team" style="--accent-bg: <?php echo esc_attr( $accent_bg ); ?>; --accent-font: <?php echo esc_attr( $accent_font ); ?>; --accent-blur: <?php echo esc_attr( $accent_blur ); ?>;">
+    <section class="team" id="team" style="--accent-bg: <?php echo esc_attr( $accent_bg ); ?>; --accent-font: <?php echo esc_attr( $accent_font ); ?>; --accent-blur: <?php echo esc_attr( $accent_blur ); ?>;">
         <div class="team__wrapper">
             <div class="container">
                 <div class="team__header">
