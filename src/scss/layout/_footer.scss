@@ -19,7 +19,7 @@
             color: $main-black;
 
             a {
-                color: $main-blue;
+                color: var(--accent_main);
                 text-decoration: none;
                 transition: color 0.3s ease;
 

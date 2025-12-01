@@ -1,0 +1,284 @@
+@use '../base/variables' as *;
+
+.apartments {
+    margin-bottom: 6.25rem;
+
+    @media (max-width: $tablet) {
+        margin-bottom: 4rem;
+    }
+
+    @media (max-width: $mobile) {
+        margin-bottom: 2rem;
+    }
+
+    &__title {
+        font-family: $font-futura;
+        font-weight: 500;
+        font-size: 3.375rem;
+        line-height: 100%;
+        margin: 0 auto;
+        width: fit-content;
+        position: relative;
+
+        span {
+            color: var(--accent_main);
+        }
+
+        @media (max-width: $tablet) {
+            font-size: 2.7rem;
+        }
+
+        @media (max-width: $mobile) {
+            font-size: 2rem;
+        }
+
+        svg {
+            position: absolute;
+            top: -23px;
+            right: -31px;
+            width: 35px;
+            height: 35px;
+            z-index: 1;
+
+            path {
+                stroke: var(--accent_main);
+            }
+        
+            @media (max-width: $tablet) {
+                top: -22px;
+                right: -35px;
+                width: 36px;
+                height: 36px;
+            }
+
+            @media (max-width: $mobile) {
+                top: -20px;
+                right: -33px;
+                width: 32px;
+                height: 32px;
+            }
+        }
+    }
+
+    &__subtitle {
+        font-family: $font-futura;
+        font-weight: 500;
+        font-size: 2rem;
+        line-height: 42px;
+        text-align: center;
+        margin: 16px auto 0 auto;
+        max-width: 780px;
+
+        @media (max-width: $tablet) {
+            font-size: 1.7rem;
+            line-height: 32px;
+        }
+
+        @media (max-width: $mobile) {
+            font-size: 1.3rem;
+            line-height: 28px;
+        }
+    }
+
+
+    &__wrapper {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 32px;
+        margin-top: 54px;
+
+        @media (max-width: $tablet) {
+            grid-template-columns: repeat(2, 1fr);
+            margin-top: 32px;
+        }
+
+        @media (max-width: $tablet-sm) {
+            grid-template-columns: 1fr;
+        }
+
+        @media (max-width: $mobile) {
+            margin-top: 24px;
+        }
+    }
+
+
+    &__load-more {
+        margin-top: 64px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        min-height: 54px;
+
+        @media (max-width: $tablet) {
+            margin-top: 32px;
+        }
+    }
+}
+
+.load_more_button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 24px;
+
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+
+    color: #fff;
+    background-color: var(--accent_main);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.4s ease;
+
+    &:hover {
+        background-color: var(--accent_font);
+    }
+
+    &.loading {
+        opacity: 0.6;
+        cursor: not-allowed;
+        pointer-events: none;
+    }
+}
+
+.apartment-card {
+    position: relative;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0px 3px 28px 0px #CBCBCB40;
+    max-width: 395px;
+
+    @media (max-width: $tablet-sm) {
+        max-width: 100%;
+    }
+
+    &__link {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 10;
+    }
+
+    &__header {
+        position: relative;
+    }
+
+    &__inner {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        min-height: 156px;
+        background: linear-gradient(180.78deg, rgba(38, 38, 38, 0) 17.91%, rgba(0, 0, 0, 0.85) 109.67%);
+        color: #fff;
+        padding: 24px;
+        
+        display: flex;
+        flex-direction: column;
+        justify-content: end;
+    }
+
+    &__title {
+        font-family: $font-futura-pt;
+        font-weight: 500;
+        font-size: 1.5rem;
+        line-height: 24px;
+    }
+
+    &__subtitle {
+        font-family: $font-futura-pt;
+        font-weight: 400;
+        font-size: 1rem;
+        line-height: 24px;
+    }
+
+    &__image {
+        height: 263px;
+        overflow: hidden;
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+    }
+
+    &:hover .apartment-card__image img {
+        transform: scale(1.1);
+    }
+
+    &__style {
+        position: absolute;
+        top: 24px;
+        right: 24px;
+
+        span {
+            display: inline-block;
+            padding: 2px 16px;
+            border-radius: 50px;
+            background-color: var(--accent_main);
+            color: #fff;
+
+            font-family: $font-futura-pt;
+            font-weight: 450;
+            font-size: 1rem;
+            line-height: 24px;
+        }
+    }
+
+    &__body {
+        padding: 24px;
+    }
+    
+    &__location {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+
+        font-family: $font-futura-pt;
+        font-weight: 450;
+        font-size: 1rem;
+        line-height: 24px;
+        padding-bottom: 16px;
+        border-bottom: 1px solid #E7E7E7;
+        color: var(--accent_main);
+    }
+
+    &__detail {
+        display: flex;
+        align-items: center;
+        gap: 32px;
+        margin-top: 16px;
+        color: #A7A9BC;
+
+        font-family: $font-futura-pt;
+        font-weight: 400;
+        font-size: 1rem;
+        line-height: 150%;
+        letter-spacing: 2%;
+    }
+
+    &__size {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    &__places {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+    }
+}
+

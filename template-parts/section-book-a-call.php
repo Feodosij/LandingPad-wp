@@ -3,13 +3,10 @@
  * Reusable Template: Book a call Section
  */
 
-$accent_font = isset($GLOBALS['accent_font']) ? $GLOBALS['accent_font'] : '#2967F0';
-$accent_bg_light = isset($GLOBALS['accent_bg_light']) ? $GLOBALS['accent_bg_light'] : '#2967F0';
-
 $form_shortcode = '[contact-form-7 id="7f0ba5d" title="Get in touch"]';
 ?>
 
-<section class="book-call" id="form" style="--accent_font: <?php echo esc_attr( $accent_font ); ?>; --accent_bg_light: <?php echo esc_attr( $accent_bg_light ); ?>;">
+<section class="book-call" id="form">
     <div class="container">
         <div class="book-call__header">
             <h2 class="book-call__title">

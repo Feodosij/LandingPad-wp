@@ -9,13 +9,19 @@ $hero_service_title = get_field('hero_service_title');
 $hero_service_description = get_field('hero_service_description');
 $hero_service_link = get_field('hero_service_link');
 
+if ( is_page( 'services' ) ) {
+    $modifier_class = ' masked_overlay';
+} else {
+    $modifier_class = '';
+}
+
 ?>
 
 <section class="hero-service">
     <div class="container">
         <div class="hero-service__content">
             <?php if ( $hero_service_masked_text ) { ?>
-                <h1 class="hero-service__masked"><?php echo esc_html( $hero_service_masked_text ); ?></h1>
+                <h1 class="hero-service__masked<?php echo esc_attr( $modifier_class ); ?>"><?php echo esc_html( $hero_service_masked_text ); ?></h1>
             <?php } ?>
 
             <?php if ( $hero_service_title ) { ?>

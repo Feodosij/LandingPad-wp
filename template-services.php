@@ -5,13 +5,6 @@ Template Post Type: page
 */
 get_header();
 
-$GLOBALS['accent_bg'] = '#DBEBFF';
-$GLOBALS['accent_font'] = '#0F38B4';
-$GLOBALS['accent_blur'] = '#3060C9';
-$GLOBALS['accent_bg_light'] = '#F9FBFF';
-
-$accent_font = isset($GLOBALS['accent_font']) ? $GLOBALS['accent_font'] : '#0F38B4';
-
 $section_services_title = get_field('section_services_title');
 $section_services_subtitle = get_field('section_services_subtitle');
 $section_services_text = get_field('section_services_text');
@@ -23,7 +16,7 @@ $section_services_text = get_field('section_services_text');
     <!-- section Hero Services -->
     <?php get_template_part( 'template-parts/section', 'hero-services' ); ?>
 
-    <section class="services" style="--accent_font: <?php echo esc_attr( $accent_font ); ?>;">
+    <section class="services">
         <div class="container">
             <div class="services__header">
                 <?php if ( $section_services_title ) { ?>

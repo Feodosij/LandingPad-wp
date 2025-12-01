@@ -14,11 +14,9 @@ $phone      = get_field('contact_phone', 'option');
 $social_icon = get_field('contact_social_icon', 'option');
 $socials     = get_field('contact_social_list', 'option');
 
-$accent_bg_light = isset($GLOBALS['accent_bg_light']) ? $GLOBALS['accent_bg_light'] : '#F9FBFF';
-$accent_font = isset($GLOBALS['accent_font']) ? $GLOBALS['accent_font'] : '#0F38B4';
 ?>
 
-<section class="contacts" id="contacts" style="--accent-font: <?php echo esc_attr( $accent_font ); ?>; --accent-bg-light: <?php echo esc_attr( $accent_bg_light ); ?>;">
+<section class="contacts" id="contacts">
     <div class="container">
         <?php if ( $title ) {?>
             <div class="contacts__title">
@@ -92,6 +90,9 @@ $accent_font = isset($GLOBALS['accent_font']) ? $GLOBALS['accent_font'] : '#0F38
 
                                 <a href="<?php echo esc_url( $link ); ?>" class="social-link" target="_blank">
                                     <img src="<?php echo esc_url( $icon ); ?>" alt="Social icon" loading="lazy">
+                                    <svg width="21" height="14" viewBox="0 0 21 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M1.00024 6C4.83358 4.33333 13.6002 1 18.0002 1C23.5002 1 6.50024 7.5 6.00024 11C5.50024 14.5 13.0002 8 17.0002 8.5" stroke="#2967F0" stroke-width="2" stroke-linecap="round" />
+                                    </svg>
                                 </a>
                             <?php } ?>
                         </div>

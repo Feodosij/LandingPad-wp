@@ -36,7 +36,7 @@
     "src": "src/fonts/Gilroy-Regular.woff2"
   },
   "src/js/main-legacy.js": {
-    "file": "assets/main-legacy-DojUC7C-.js",
+    "file": "assets/main-legacy-BX2mtrQ0.js",
     "name": "main",
     "src": "src/js/main-legacy.js",
     "isEntry": true,
@@ -45,12 +45,12 @@
     ]
   },
   "src/js/main.js": {
-    "file": "assets/main-DDmQrJ0n.js",
+    "file": "assets/main-B6mnt2aQ.js",
     "name": "main",
     "src": "src/js/main.js",
     "isEntry": true,
     "css": [
-      "assets/styles-BhNZt2NY.css"
+      "assets/styles-O8PFZdwm.css"
     ],
     "assets": [
       "assets/Gilroy-Regular-CY081Tb4.woff2",
@@ -65,7 +65,7 @@
     ]
   },
   "src/scss/main-legacy.scss": {
-    "file": "assets/styles-legacy-n5msE424.js",
+    "file": "assets/styles-legacy-XFXAjGzF.js",
     "name": "styles",
     "src": "src/scss/main-legacy.scss",
     "isEntry": true,
@@ -82,12 +82,12 @@
     ]
   },
   "src/scss/main.scss": {
-    "file": "assets/styles-BhNZt2NY.css",
+    "file": "assets/styles-O8PFZdwm.css",
     "src": "src/scss/main.scss",
     "isEntry": true
   },
   "vite/legacy-polyfills-legacy": {
-    "file": "assets/polyfills-legacy-BpgqBDQJ.js",
+    "file": "assets/polyfills-legacy-B_ikRZe5.js",
     "name": "polyfills",
     "src": "vite/legacy-polyfills-legacy",
     "isEntry": true
