@@ -549,18 +549,36 @@ function lp_add_apartment_rewrite_rules() {
 }
 add_action( 'init', 'lp_add_apartment_rewrite_rules', 11 );
 
+// load .env from theme folder
+$theme_env = get_template_directory() . '/.env';
+
+if ( file_exists( $theme_env ) ) {
+    $lines = file( $theme_env, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES );
+
+    foreach ( $lines as $line ) {
+        if ( strpos(trim($line), '#') === 0 ) continue;
+
+        list($key, $value) = array_map('trim', explode('=', $line, 2));
+
+        putenv("$key=$value");
+    }
+}
+
 
 // connect google maps api
+$google_maps_key = getenv('GOOGLE_MAPS_API_KEY');
+
 function my_acf_google_map_api( $api ){
-    $api['key'] = 'AIzaSyBVs_ngHQFa0QLSpzS6ZspdKbrZLrsuSlQ';
+	global $google_maps_key;
+    $api['key'] = $google_maps_key;
     return $api;
 }
 add_filter('acf/fields/google_map/api', 'my_acf_google_map_api');
 
 function theme_enqueue_google_maps() {
     if ( is_singular('apartment') ) {
-
-		$api_url = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyBVs_ngHQFa0QLSpzS6ZspdKbrZLrsuSlQ';
+		global $google_maps_key;
+		$api_url = 'https://maps.googleapis.com/maps/api/js?key=' . $google_maps_key;
 
         wp_enqueue_script(
             'google-maps',

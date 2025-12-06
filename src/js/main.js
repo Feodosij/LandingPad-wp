@@ -4,8 +4,8 @@ import $ from 'jquery';
 
 // google map init
 window.init_map = function($el) {
-    var $markers = $el.find('.marker');
-    var args = {
+    const $markers = $el.find('.marker');
+    const args = {
         zoom: 16,
         center: new google.maps.LatLng(0, 0),
         mapTypeId: google.maps.MapTypeId.ROADMAP,
@@ -21,7 +21,7 @@ window.init_map = function($el) {
         },
     };
 
-    var map = new google.maps.Map($el[0], args);
+    const map = new google.maps.Map($el[0], args);
     map.markers = [];
 
     $markers.each(function() {
@@ -34,13 +34,13 @@ window.init_map = function($el) {
 
 // add marker adress on map
 function add_marker($marker, map) {
-    var lat = $marker.attr('data-lat') || $marker.data('lat');
-    var lng = $marker.attr('data-lng') || $marker.data('lng');
+    const lat = $marker.attr('data-lat') || $marker.data('lat');
+    const lng = $marker.attr('data-lng') || $marker.data('lng');
     
     if (!lat || !lng) return;
 
-    var latlng = new google.maps.LatLng(lat, lng);
-    var marker = new google.maps.Marker({
+    const latlng = new google.maps.LatLng(lat, lng);
+    const marker = new google.maps.Marker({
         position: latlng,
         map: map,
         title: $marker.data('title')
@@ -48,16 +48,16 @@ function add_marker($marker, map) {
 
     map.markers.push(marker);
 
-    var content = $marker.html();
+    let content = $marker.html();
     
-    var addressText = $marker.attr('data-address') || $marker.data('address');
+    const addressText = $marker.attr('data-address') || $marker.data('address');
     
     if (addressText) {
         content = '<div class="map-infowindow">' + addressText + '</div>';
     }
 
     if (content) {
-        var infowindow = new google.maps.InfoWindow({
+        const infowindow = new google.maps.InfoWindow({
             content: content
         });
 
@@ -71,7 +71,7 @@ function add_marker($marker, map) {
 
 // centered markeron map
 function center_map(map) {
-    var bounds = new google.maps.LatLngBounds();
+    const bounds = new google.maps.LatLngBounds();
     $.each(map.markers, function(i, marker) {
         var latlng = new google.maps.LatLng(marker.position.lat(), marker.position.lng());
         bounds.extend(latlng);
@@ -187,11 +187,19 @@ function addInstagramOverlayText() {
 
 
 jQuery(function($) {    
-    // waiting for load google map api
-    var checkGoogleMaps = setInterval(function() {
+    // waiting for load google map api (max 5 sec)
+    let tries = 0;
+    const maxTries = 50;
+
+    let checkGoogleMaps = setInterval(function() {
         if (typeof google !== 'undefined' && typeof google.maps !== 'undefined') {
             clearInterval(checkGoogleMaps);
             window.acf_init_maps();
+        }
+        tries++;
+        if (tries >= maxTries) {
+            clearInterval(checkGoogleMaps);
+            console.warn('Google Maps API not loaded after timeout');
         }
     }, 100);
 
@@ -263,25 +271,29 @@ jQuery(function($) {
     // ajax Load More for apartments
     const loadMoreBtn = $('#apartments-load-more');
     const wrapper = $('#apartments-wrapper');
-    const loadingText = $('#apartments-loading');
+    // const loadingText = $('#apartments-loading');
+    const originalBtnText = loadMoreBtn.text();
 
     loadMoreBtn.on('click', function(e) {
         e.preventDefault();
 
-        let currentPage = parseInt(wrapper.data('current-page'));
-        let maxPages = parseInt(wrapper.data('max-pages'));
-        let term = wrapper.data('term');
-        let perPage = wrapper.data('per-page');
+        const currentPage = parseInt(wrapper.data('current-page'));
+        const maxPages = parseInt(wrapper.data('max-pages'));
+        const term = wrapper.data('term');
+        const perPage = wrapper.data('per-page');
         
         if (currentPage >= maxPages || loadMoreBtn.hasClass('loading')) {
             return;
         }
 
-        loadMoreBtn.hide();
-        loadingText.show();
+        // loadMoreBtn.hide();
+        // loadingText.show();
         loadMoreBtn.addClass('loading');
+        loadMoreBtn.prop('disabled', true);
+        loadMoreBtn.text('Loading...');
 
-        let nextPage = currentPage + 1;
+
+        const nextPage = currentPage + 1;
 
         $.ajax({
             url: landingpad_vars.ajax_url,
@@ -299,19 +311,19 @@ jQuery(function($) {
                 wrapper.data('current-page', nextPage);
 
                 loadMoreBtn.removeClass('loading');
-                loadingText.hide();
 
                 if (nextPage >= maxPages) {
                     $('.apartments__load-more').slideUp();
                 } else {
-                    loadMoreBtn.show();
+                    loadMoreBtn.prop('disabled', false);
+                    loadMoreBtn.text(originalBtnText);
                 }
             },
             error: function(error) {
                 console.log('Error loading apartments:', error);
                 loadMoreBtn.removeClass('loading');
-                loadMoreBtn.show();
-                loadingText.hide();
+                loadMoreBtn.prop('disabled', false);
+                loadMoreBtn.text(originalBtnText);
             }
         });
     });

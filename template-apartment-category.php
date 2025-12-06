@@ -47,6 +47,7 @@ get_header();
         'post_type' => 'apartment',
         'posts_per_page' => $posts_per_page,
         'post_status' => 'publish',
+        'paged' => $paged,
         'tax_query' => array(
             array(
                 'taxonomy' => 'apartments_category',
@@ -89,10 +90,11 @@ get_header();
                     } wp_reset_postdata(); ?>
                 </div>
                 
-                <div class="apartments__load-more">
-                    <button id="apartments-load-more" class="load_more_button">Load more</button>
-                    <div id="apartments-loading" class="load_more_loading" style="display:none;">Loading…</div>
-                </div>
+                <?php if ($apartments_query->max_num_pages > 1 ) { ?>
+                    <div class="apartments__load-more">
+                        <button id="apartments-load-more" class="load_more_button">Load more</button>
+                    </div>
+                <?php } ?>
             </div>
         </section>
 
