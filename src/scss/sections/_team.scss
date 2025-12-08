@@ -3,7 +3,7 @@
 .team {
     
     &__wrapper {
-        background-color: var(--accent-bg);
+        background-color: var(--accent_bg);
         border-radius: 1rem;
         padding: 5rem 2rem 3.125rem;
         position: relative;
@@ -15,7 +15,7 @@
             content: '';
             position: absolute;
             border-radius: 50%;
-            background-color: var(--accent-blur);
+            background-color: var(--accent_main);
             opacity: 1;
             z-index: 0;
         }
@@ -89,7 +89,7 @@
             z-index: 1;
 
             path {
-                stroke: var(--accent-font);
+                stroke: var(--accent_font);
             }
         
             @media (max-width: $tablet) {
@@ -126,7 +126,7 @@
         max-width: 25rem;
 
         strong, b, span {
-            color: var(--accent-font);
+            color: var(--accent_font);
         }
 
         @media (max-width: $tablet) {
@@ -195,7 +195,7 @@
         font-size: 0.875rem;
         line-height: 24px;
         margin-bottom: 1.5rem;
-        color: var(--accent-font);
+        color: var(--accent_font);
 
         @media (max-width: $tablet-sm) {
             margin-bottom: 0.8rem;         

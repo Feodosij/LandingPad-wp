@@ -7,7 +7,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 5.625rem;
+    margin-bottom: 6.525rem;
 
     @media (max-width: $tablet) {
         margin-bottom: 4rem;
@@ -56,11 +56,12 @@
         font-size: 300px;
         text-align: center;
         text-transform: uppercase;
-        mix-blend-mode: overlay;
+        mix-blend-mode: color-dodge;
         line-height: 1;
         z-index: 2;
         margin-top: 0;
         margin-bottom: 2.75rem;
+        color: rgba(255, 255, 255, 0.5);
 
         @media (max-width: $desktop-sm) {
             font-size: 240px;
@@ -78,6 +79,11 @@
         @media (max-width: $mobile) {
             font-size: 100px;
         }
+    }
+
+    .masked_overlay {
+        mix-blend-mode: overlay;
+        color: #fff;
     }
 
     &__title {
@@ -124,8 +130,8 @@
     }
 
     &__link {
-        padding: 1rem 3.3rem 0.875rem;
-        background-color: $main-blue;
+        padding: 1.3rem 4.3rem 0.913rem;
+        background-color: var(--accent_main);
         border-radius: 4px;
         cursor: pointer;
         transition: background-color 0.3s ease;
@@ -143,7 +149,7 @@
         }
 
         &:hover {
-            background-color: #1F52C5;
+            background-color: var(--accent_font);
             color: #fff;
         }
 

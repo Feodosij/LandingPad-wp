@@ -4,12 +4,12 @@
 * Template Post Type: page
 */
 
-get_header(); 
-
+$GLOBALS['accent_main'] = '#2967F0';
 $GLOBALS['accent_bg'] = '#DBEBFF';
 $GLOBALS['accent_font'] = '#0F38B4';
-$GLOBALS['accent_blur'] = '#3060C9';
 $GLOBALS['accent_bg_light'] = '#F9FBFF';
+
+get_header(); 
 
 $hero_bg = get_field('background_image');
 if ( $hero_bg ) {
@@ -128,7 +128,7 @@ if ( $hero_bg ) {
     <?php } ?>
    
 
-     <!-- section Team -->
+    <!-- section Team -->
     <?php get_template_part( 'template-parts/section', 'team' ); ?>
 
 

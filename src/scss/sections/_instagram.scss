@@ -94,7 +94,7 @@
                     left: 0;
                     width: 100%;
                     height: 100%;
-                    background-color: rgba(41, 103, 240, 0.8);
+                    background-color: rgb(from var(--accent_main) r g b / 0.8);
                     opacity: 0;
                     transition: opacity 0.3s ease;
                     z-index: 5;
@@ -183,6 +183,12 @@
 
     #sbi_load {
         margin-bottom: 56px;
+        
+        .sbi_custom {
+            a {
+                color: var(--accent_font)!important;
+            }
+        }
 
         @media (max-width: $tablet) {
             margin-bottom: 42px;

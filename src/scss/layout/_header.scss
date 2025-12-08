@@ -171,7 +171,7 @@
         .menu-button {
             margin-left: auto;
             padding: 1rem 3.3rem 0.875rem;
-            background-color: $main-blue;
+            background-color: var(--accent_main);
             border-radius: 4px;
             cursor: pointer;
             transition: background-color 0.3s ease;
@@ -189,7 +189,7 @@
             }
 
             &:hover {
-                background-color: #1F52C5;
+                background-color: var(--accent_font);
                 a {
                     color: #fff;
                 }
@@ -332,7 +332,7 @@
             }
 
             &.menu-button a {
-                background-color: $main-blue;
+                background-color: var(--accent_main);
                 color: #fff;
                 padding: 0.75rem 2rem;
                 border-radius: 6px;

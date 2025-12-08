@@ -2,12 +2,9 @@
 /**
  * Reusable Template: Instagram Section
  */
-
-$accent_font = isset($GLOBALS['accent_font']) ? $GLOBALS['accent_font'] : '#2967F0';
-
 ?>
 
-<section class="instagram" style="--accent_font: <?php echo esc_attr( $accent_font ); ?>;">
+<section class="instagram">
     <div class="container">
         <div class="instagram__header">
             <h2 class="instagram__title"> Instagram
@@ -19,5 +16,4 @@ $accent_font = isset($GLOBALS['accent_font']) ? $GLOBALS['accent_font'] : '#2967
         
         <?php echo do_shortcode( '[instagram-feed feed=1]' ); ?>
     </div>
-   
 </section>

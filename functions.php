@@ -182,6 +182,11 @@ function vite_assets() {
             }
 		}
 	}
+
+	wp_localize_script( 'main-js', 'landingpad_vars', array(
+		'ajax_url' => admin_url( 'admin-ajax.php' ),
+		'nonce'    => wp_create_nonce( 'load_more_nonce' )
+	));
 }
 add_action( 'wp_enqueue_scripts', 'vite_assets' );
 
@@ -234,6 +239,73 @@ if ( defined( 'JETPACK__VERSION' ) ) {
 
 
 // CUSTOM
+
+// dynamic change colors on different pages
+function landingpad_output_dynamic_colors() {
+    $defaults = [
+        'accent_main'     => '#2967F0',
+        'accent_bg'       => '#DBEBFF',
+        'accent_font'     => '#0F38B4',
+        'accent_bg_light' => '#F9FBFF',
+    ];
+
+    $main     = !empty($GLOBALS['accent_main'])     ? $GLOBALS['accent_main']     : $defaults['accent_main'];
+    $bg       = !empty($GLOBALS['accent_bg'])       ? $GLOBALS['accent_bg']       : $defaults['accent_bg'];
+    $font     = !empty($GLOBALS['accent_font'])     ? $GLOBALS['accent_font']     : $defaults['accent_font'];
+    $bg_light = !empty($GLOBALS['accent_bg_light']) ? $GLOBALS['accent_bg_light'] : $defaults['accent_bg_light'];
+
+    ?>
+    <style id="landingpad-dynamic-vars">
+        :root {
+            --accent_main:     <?php echo esc_attr($main); ?>;
+            --accent_bg:         <?php echo esc_attr($bg); ?>;
+            --accent_font:     <?php echo esc_attr($font); ?>;
+            --accent_bg_light: <?php echo esc_attr($bg_light); ?>;
+        }
+    </style>
+    <?php
+}
+add_action('wp_head', 'landingpad_output_dynamic_colors', 100);
+
+
+// ajax load more apartments
+function landingpad_load_more_apartments() {
+    check_ajax_referer('load_more_nonce', 'nonce');
+
+    $paged = isset($_POST['page']) ? intval($_POST['page']) : 1;
+    $term_slug = isset($_POST['term']) ? sanitize_text_field($_POST['term']) : '';
+    $posts_per_page = isset($_POST['per_page']) ? intval($_POST['per_page']) : 3;
+
+    $args = array(
+        'post_type'      => 'apartment',
+        'post_status'    => 'publish',
+        'posts_per_page' => $posts_per_page,
+        'paged'          => $paged,
+        'tax_query'      => array(
+            array(
+                'taxonomy' => 'apartments_category',
+                'field'    => 'slug',
+                'terms'    => $term_slug,
+            ),
+        ),
+    );
+
+    $query = new WP_Query( $args );
+
+    if ( $query->have_posts() ) {
+        while ( $query->have_posts() ) {
+            $query->the_post();
+            get_template_part( 'template-parts/content', 'apartment-card' );
+        }
+    } else {
+        echo ''; 
+    }
+
+    wp_reset_postdata();
+    wp_die();
+}
+add_action( 'wp_ajax_load_more_apartments', 'landingpad_load_more_apartments' );
+add_action( 'wp_ajax_nopriv_load_more_apartments', 'landingpad_load_more_apartments' );
 
 // change custom logo, remove <img> and return <svg></svg>
 function landingpad_get_inline_logo() {
@@ -382,7 +454,7 @@ add_filter('post_thumbnail_html', 'add_lazy_load_to_post_thumbnail', 10, 1);
 // change menu style for some page
 add_filter( 'body_class', function( $classes ) {
 
-    if ( is_singular( 'services' ) ) {
+    if ( is_singular( 'services' ) || is_singular( 'apartment' )  ) {
         $classes[] = 'header_light_style';
     }
 
@@ -391,3 +463,130 @@ add_filter( 'body_class', function( $classes ) {
 
 // remove default sending mail cf7 (for test sending)
 add_filter( 'wpcf7_skip_mail', '__return_true' );
+
+// register rewrite tag
+function lp_add_rewrite_tag() {
+    add_rewrite_tag( '%apartments_category%', '([^/]+)' );
+}
+add_action( 'init', 'lp_add_rewrite_tag', 5 );
+
+
+// register taxonomy cpt apartments
+function landingpad_register_apartment_taxonomy() {
+    $labels = array(
+        'name' => 'Apartment Categories',
+        'singular_name' => 'Category',
+    );
+    
+    register_taxonomy('apartments_category', 'apartment', array(
+        'labels' => $labels,
+        'hierarchical' => true,
+        'public' => true,
+		'show_ui' => true,
+        'show_admin_column' => true,
+        'rewrite' => false,
+    ));
+    
+    register_taxonomy('apartment_tag', 'apartment', array(
+        'labels' => array('name' => 'Apartment Tags'),
+        'hierarchical' => false,
+        'public' => true,
+        'show_admin_column' => true,
+        'rewrite' => array('slug' => 'apartment-tag'),
+    ));
+}
+add_action('init', 'landingpad_register_apartment_taxonomy', 6 );
+
+// CPT Apartments
+function landingpad_register_apartments_cpt() {
+	$labels = array(
+		'name' => 'Apartments',
+		'singular_name' => 'Apartment',
+		'menu_name' => 'Apartments',
+		'add_new' => 'Add new partment',
+		'add_new_item' => 'Add new apartment',
+
+	);
+	$args = array(
+		'labels' => $labels,
+		'public' => true,
+		'has_archive' => false,
+		'publicly_queryable' => true,
+		'menu_icon' => 'dashicons-building',
+		'supports' => array( 'title', 'thumbnail', 'editor'),
+		'menu_position' => 30,
+		'rewrite' => array( 
+            'slug' => 'apartments/%apartments_category%', 
+            'with_front' => false 
+        ),
+	);
+	register_post_type( 'apartment', $args );
+}
+add_action( 'init', 'landingpad_register_apartments_cpt', 10 );
+
+// change apartment permalink
+function landingpad_apartment_link_filter( $post_link, $post ) {
+    if ( 'apartment' !== $post->post_type ) {
+        return $post_link;
+    }
+
+    $terms = get_the_terms( $post->ID, 'apartments_category' );
+    if ( $terms && ! is_wp_error( $terms ) ) {
+        $term_slug = $terms[0]->slug;
+    } else {
+        $term_slug = 'rent';
+    }
+
+    return home_url( user_trailingslashit( $term_slug . '/' . $post->post_name ) );
+}
+add_filter( 'post_type_link', 'landingpad_apartment_link_filter', 10, 2 );
+
+
+function lp_add_apartment_rewrite_rules() {
+    $terms_regex = 'rent|buy|build';
+
+    add_rewrite_rule( '^(' . $terms_regex . ')/([^/]+)/?$', 'index.php?post_type=apartment&name=$matches[2]', 'top' );
+}
+add_action( 'init', 'lp_add_apartment_rewrite_rules', 11 );
+
+// load .env from theme folder
+$theme_env = get_template_directory() . '/.env';
+
+if ( file_exists( $theme_env ) ) {
+    $lines = file( $theme_env, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES );
+
+    foreach ( $lines as $line ) {
+        if ( strpos(trim($line), '#') === 0 ) continue;
+
+        list($key, $value) = array_map('trim', explode('=', $line, 2));
+
+        putenv("$key=$value");
+    }
+}
+
+
+// connect google maps api
+$google_maps_key = getenv('GOOGLE_MAPS_API_KEY');
+
+function my_acf_google_map_api( $api ){
+	global $google_maps_key;
+    $api['key'] = $google_maps_key;
+    return $api;
+}
+add_filter('acf/fields/google_map/api', 'my_acf_google_map_api');
+
+function theme_enqueue_google_maps() {
+    if ( is_singular('apartment') ) {
+		global $google_maps_key;
+		$api_url = 'https://maps.googleapis.com/maps/api/js?key=' . $google_maps_key;
+
+        wp_enqueue_script(
+            'google-maps',
+            $api_url,
+            [],
+            null,
+            true
+        );
+    }
+}
+add_action('wp_enqueue_scripts', 'theme_enqueue_google_maps');

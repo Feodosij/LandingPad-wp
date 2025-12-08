@@ -1,0 +1,335 @@
+@use '../base/variables' as *;
+
+.apartment-single {
+    margin-top: 1.75rem;
+
+    &__wrapper {
+        display: flex;
+        margin-bottom: 4rem;
+        gap: 32px;
+
+        @media (max-width: $tablet) {
+            flex-direction: column;
+        }
+
+        @media (max-width: $mobile) {
+            margin-bottom: 2rem;
+        }
+    }
+
+    &__gallery {
+        flex: 1 1 50%;
+        max-width: 604px;
+        width: 100%;
+        position: relative;
+
+        @media (max-width: $desktop-sm) {
+            max-width: 450px;
+        }
+
+        @media (max-width: $tablet) {
+            max-width: 100%;
+        }
+
+        @media (max-width: $mobile) {
+            flex: 1;
+        }
+    }
+
+    &__info {
+        flex: 1 1 50%;
+
+        @media (max-width: $mobile) {
+            flex: 1;
+        }
+    }
+
+    &__title {
+        font-family: $font-futura;
+        font-weight: 500;
+        font-size: 2.625rem;
+        line-height: 100%;
+        margin-bottom: 24px;
+        margin-top: 8px;
+
+        @media (max-width: $mobile) {
+            font-size: 2rem;
+        }
+    }
+
+    &__content {
+        h4 {
+            font-family: $font-futura;
+            font-weight: 500;
+            font-size: 1.5rem;
+            line-height: 100%;
+            margin-top: 0;
+            margin-bottom: 8px;
+        }
+
+        p {
+            font-family: $font-futura-pt;
+            font-weight: 400;
+            font-size: 1.25rem;
+            line-height: 100%;
+        }
+    }
+
+    &__features {
+        margin-bottom: 6.25rem;
+
+        @media (max-width: $tablet) {
+            margin-bottom: 4rem;
+        }
+
+        @media (max-width: $mobile) {
+            margin-bottom: 2rem;
+        }
+    }
+
+    &__tags-title {
+        font-family: $font-futura;
+        font-weight: 500;
+        font-size: 1.5rem;
+        line-height: 100%;
+        margin-bottom: 1rem;
+    }
+
+    &__tags-list {
+        display: flex;
+        gap: 24px 16px;
+        flex-wrap: wrap;
+
+        @media (max-width: $mobile) {
+            gap: 14px 12px;
+        }
+    }
+
+    &__tag {
+        font-family: $font-futura-pt;
+        font-weight: 400;
+        font-size: 1rem;
+        line-height: 150%;
+        letter-spacing: 2%;
+
+        display: inline-flex;
+        flex-wrap: wrap;
+        padding: 8px 16px;
+        background-color: $main-blue;
+        color: #fff;
+        border-radius: 90px;
+    }
+}
+
+.apartment-slider {
+    &__item {
+        border-radius: 8px;
+        overflow: hidden;
+        position: relative;
+        height: 424px;
+        width: 100%;
+
+        @media (max-width: $mobile) {
+            height: 324px;
+        }
+
+        img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+    }
+
+    .slick-dots {
+        position: absolute;
+        bottom: 16px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 10;
+        display: flex;
+        padding: 0;
+        margin: 0;
+        list-style: none;
+        
+        background-color: rgba(0, 0, 0, 0.5);
+        padding: 7px 11px;
+        border-radius: 8px;
+        color: #fff;
+        font-family: $font-futura-pt;
+        font-weight: 450;
+        font-size: 1rem;
+
+        li {
+            display: none;
+            margin: 0;
+
+            &.slick-active {
+                display: block;
+            }
+        }
+    }
+}
+
+
+.slick-list {
+    height: 100%;
+    overflow: hidden;
+    border-radius: 8px;
+}
+
+.slick-arrow {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    border-radius: 8px;
+    z-index: 2;
+    border: none;
+    width: 54px;
+    height: 54px;
+    padding: 4px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    @media (max-width: $tablet) {
+        width: 44px;
+        height: 44px;
+    }
+
+    svg {
+        width: 9px;
+        height: auto;
+
+        path {
+            stroke: #fff;
+            fill: #fff;
+        }
+    }
+}
+
+.slick-prev {
+    top: 50%;
+    transform: translateY(-50%);
+    left: 16px;
+}
+
+.slick-next {
+    top: 50%;
+    transform: translateY(-50%);
+    right: 16px;
+}
+
+
+.lightbox {
+    display: none;
+    position: fixed;
+    z-index: 120;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(15, 15, 16, 0.24);
+    backdrop-filter: blur(4px);
+
+    justify-content: center;
+    align-items: center;
+    
+    &.is-open {
+        display: flex;
+    }
+    
+    &__content {
+        position: relative;
+        width: 100%;
+        height: auto;
+        max-width: 1200px;
+        max-height: 650px;
+        aspect-ratio: 16 / 10;
+        margin: 0 24px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        @media (max-width: $mobile) {
+            aspect-ratio: 3 / 4;
+        }
+    }
+    
+    &__image {
+        width: 100%;
+        height: 100%;
+        max-width: 1200px;
+        max-height: 650px;
+        border-radius: 4px;
+        box-shadow: 0px 3px 28px 0px rgba(203, 203, 203, 0.25);
+        object-fit: cover;
+        object-position: center;
+        aspect-ratio: 16 / 10;
+
+        @media (max-width: $mobile) {
+            aspect-ratio: 3 / 4;
+        }
+    }
+
+    &__counter {
+        position: absolute;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: rgba(0, 0, 0, 0.7);
+        color: #fff;
+        padding: 0.5rem 1rem;
+        border-radius: 4px;
+        font-family: $font-futura-pt; 
+        font-weight: 500;
+        font-size: 1rem;
+        z-index: 20;
+        pointer-events: none;
+    }
+    
+    &__close {
+        position: absolute;
+        background-color: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(4px);
+        top: 0;
+        right: -74px;
+        color: #fff;
+        cursor: pointer;
+        z-index: 100;
+        width: 54px;
+        height: 54px;
+        border-radius: 8px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        @media (max-width: $desktop-sm) {
+            right: 16px;
+            top: 16px;
+        }
+
+        @media (max-width: $tablet) {
+            width: 44px;
+            height: 44px;
+        }
+
+        svg {
+            @media (max-width: $tablet) {
+                width: 14px;
+                height: 14px;
+            }
+        }
+    }
+}
+
+// google map
+.acf-map {
+    width: 100%;
+    height: 424px;
+    margin: 20px 0;
+    border-radius: 8px;
+}

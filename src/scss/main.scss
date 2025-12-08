@@ -19,6 +19,9 @@
 @use './sections/hero-services';
 @use './sections/services';
 @use './sections/single-service';
+@use './sections/intro-apartment';
+@use './sections/apartments';
+@use './sections/single-apartment';
 
 body {
     font-family: $font-gilroy;
