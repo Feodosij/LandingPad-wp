@@ -17,7 +17,7 @@ get_header(); ?>
                 <span class="breadcrumbs__current"><?php single_post_title(); ?></span>
             </div>
 
-            <h1 class="blog_title">
+            <h1 class="blog-title">
                 <?php single_post_title(); ?>
                 <svg width="27" height="26" viewBox="0 0 27 26" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M12.9059 24.5C15.7574 24.5 20.7475 24.2745 25.5 24.2745M8.62871 18.4118L18.6089 6.68628M1.5 16.3824C1.5 15.6608 1.5 6.16013 1.5 1.5" stroke="#2967F0" stroke-width="3" stroke-linecap="round" />
@@ -39,7 +39,7 @@ get_header(); ?>
 
                 <?php global $wp_query;
                 if (  $wp_query->max_num_pages > 1 ) { ?>
-                    <div class="load-more-container load_more_blog">
+                    <div class="load-more-container load-more-blog">
                         <button id="load-more-btn" class="load_more_button" data-current-page="1" data-max-pages="<?php echo $wp_query->max_num_pages; ?>">
                             Load More
                         </button>

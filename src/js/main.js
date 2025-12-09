@@ -92,126 +92,6 @@ window.acf_init_maps = function() {
     });
 };
 
-document.addEventListener('DOMContentLoaded', () => {
-    // menu scroll
-    const header = document.querySelector( '.header' );
-
-    if ( header ) {
-        window.addEventListener( 'scroll', () => {
-            if ( window.scrollY > 5 ) {
-                header.classList.add( 'is_scrolled' );
-            } else {
-                header.classList.remove( 'is_scrolled' );
-            }
-        });
-    }
-
-    // mobile menu, burger
-    const burger = document.querySelector('#burger');
-    const menuOverlay = document.querySelector('#js-menu-overlay');
-    const body = document.body;
-
-    if (header && burger && menuOverlay) {
-        burger.addEventListener('click', () => {
-            const isOpen = header.classList.toggle('mobile-menu-open');
-            burger.setAttribute('aria-expanded', isOpen);
-            body.classList.toggle( 'no-scroll' );
-        });
-
-        menuOverlay.addEventListener('click', () => {
-            header.classList.remove('mobile-menu-open');
-            burger.setAttribute('aria-expanded', 'false');
-            body.classList.remove( 'no-scroll' );
-        });
-    }
-
-
-    const parentLinks = document.querySelectorAll('.mobile-menu .menu-item-has-children > a');
-
-    parentLinks.forEach((link) => {
-        link.addEventListener('click', (e) => {
-            e.preventDefault(); 
-            
-            const parentLi = link.parentElement;
-            parentLi.classList.toggle('is-open');
-        });
-    });
-
-
-    // default open one accordion
-    const TARGET_PAGE_CLASS = 'single-services';
-    const isTargetPage = document.body.classList.contains(TARGET_PAGE_CLASS);
-
-    if (isTargetPage) {
-        if (window.location.hash) {
-            const targetId = window.location.hash;
-            const targetElement = document.querySelector(targetId);
-
-            if (targetElement && targetElement.tagName === 'DETAILS') {
-                targetElement.setAttribute('open', true);
-            } 
-
-        } else {
-            const allAccordions = document.querySelectorAll(".accordion__details");
-
-            if (allAccordions.length === 0) {
-                return; 
-            }
-
-            const first = allAccordions[0];
-            first.setAttribute("open", true);
-        }
-    }
-
-    // table of content
-    const tocLinks = document.querySelectorAll('.toc__link');
-    const headings = document.querySelectorAll('.single-blog__content h2, .single-blog__content h3');
-    
-    if (tocLinks.length === 0 || headings.length === 0) return;
-
-    const observerOptions = {
-        root: null,
-        rootMargin: '-100px 0px -60% 0px',
-        threshold: 0
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                tocLinks.forEach(link => link.classList.remove('active'));
-                
-                const activeId = entry.target.getAttribute('id');
-                const activeLink = document.querySelector(`.toc__link[href="#${activeId}"]`);
-                
-                if (activeLink) {
-                    activeLink.classList.add('active');
-                }
-            }
-        });
-    }, observerOptions);
-
-    headings.forEach(heading => {
-        observer.observe(heading);
-    });
-    
-    tocLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-            const targetId = this.getAttribute('href').substring(1);
-            const targetSection = document.getElementById(targetId);
-            
-            if(targetSection){
-                window.scrollTo({
-                    top: targetSection.offsetTop - 120,
-                    behavior: 'smooth'
-                });
-            }
-        });
-    });
-
-    addInstagramOverlayText();
-});
-
 // add "View post" text to instagram card overlay 
 function addInstagramOverlayText() {
     const instagramItems = document.querySelectorAll('#sb_instagram #sbi_images .sbi_item');
@@ -427,6 +307,137 @@ jQuery(function($) {
             }
         });
     });
+
+
+// menu scroll
+    const header = document.querySelector( '.header' );
+
+    if ( header ) {
+        window.addEventListener( 'scroll', () => {
+            if ( window.scrollY > 5 ) {
+                header.classList.add( 'is_scrolled' );
+            } else {
+                header.classList.remove( 'is_scrolled' );
+            }
+        });
+    }
+
+    // mobile menu, burger
+    const burger = document.querySelector('#burger');
+    const menuOverlay = document.querySelector('#js-menu-overlay');
+    const body = document.body;
+
+    if (header && burger && menuOverlay) {
+        burger.addEventListener('click', () => {
+            const isOpen = header.classList.toggle('mobile-menu-open');
+            burger.setAttribute('aria-expanded', isOpen);
+            body.classList.toggle( 'no-scroll' );
+        });
+
+        menuOverlay.addEventListener('click', () => {
+            header.classList.remove('mobile-menu-open');
+            burger.setAttribute('aria-expanded', 'false');
+            body.classList.remove( 'no-scroll' );
+        });
+    }
+
+
+    const parentLinks = document.querySelectorAll('.mobile-menu .menu-item-has-children > a');
+
+    parentLinks.forEach((link) => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault(); 
+            
+            const parentLi = link.parentElement;
+            parentLi.classList.toggle('is-open');
+        });
+    });
+
+
+    // default open one accordion
+    const TARGET_PAGE_CLASS = 'single-services';
+    const isTargetPage = document.body.classList.contains(TARGET_PAGE_CLASS);
+
+    if (isTargetPage) {
+        if (window.location.hash) {
+            const targetId = window.location.hash;
+            const targetElement = document.querySelector(targetId);
+
+            if (targetElement && targetElement.tagName === 'DETAILS') {
+                targetElement.setAttribute('open', true);
+            } 
+
+        } else {
+            const allAccordions = document.querySelectorAll(".accordion__details");
+
+            if (allAccordions.length === 0) {
+                return; 
+            }
+
+            const first = allAccordions[0];
+            first.setAttribute("open", true);
+        }
+    }
+
+    // table of content
+    function initTableOfContent() {
+
+        if ( !document.body.classList.contains( 'single-post' ) ) {
+            return; 
+        }
+    
+        const tocLinks = document.querySelectorAll('.toc__link');
+        const headings = document.querySelectorAll('.single-blog__content h2, .single-blog__content h3');
+        
+        if (tocLinks.length === 0 || headings.length === 0) return;
+
+        const observerOptions = {
+            root: null,
+            rootMargin: '-100px 0px -60% 0px',
+            threshold: 0
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    tocLinks.forEach(link => link.classList.remove('active'));
+                    
+                    const activeId = entry.target.getAttribute('id');
+                    const activeLink = document.querySelector(`.toc__link[href="#${activeId}"]`);
+                    
+                    if (activeLink) {
+                        activeLink.classList.add('active');
+                    }
+                }
+            });
+        }, observerOptions);
+
+        headings.forEach(heading => {
+            observer.observe(heading);
+        });
+        
+        tocLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                const targetSection = document.getElementById(targetId);
+                
+                if(targetSection){
+                    window.scrollTo({
+                        top: targetSection.offsetTop - 120,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    }
+
+    initTableOfContent();
+
+    addInstagramOverlayText();
+
+
+
 });
 
 
