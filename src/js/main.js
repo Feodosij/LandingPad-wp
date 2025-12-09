@@ -163,6 +163,52 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // table of content
+    const tocLinks = document.querySelectorAll('.toc__link');
+    const headings = document.querySelectorAll('.single-blog__content h2, .single-blog__content h3');
+    
+    if (tocLinks.length === 0 || headings.length === 0) return;
+
+    const observerOptions = {
+        root: null,
+        rootMargin: '-100px 0px -60% 0px',
+        threshold: 0
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                tocLinks.forEach(link => link.classList.remove('active'));
+                
+                const activeId = entry.target.getAttribute('id');
+                const activeLink = document.querySelector(`.toc__link[href="#${activeId}"]`);
+                
+                if (activeLink) {
+                    activeLink.classList.add('active');
+                }
+            }
+        });
+    }, observerOptions);
+
+    headings.forEach(heading => {
+        observer.observe(heading);
+    });
+    
+    tocLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href').substring(1);
+            const targetSection = document.getElementById(targetId);
+            
+            if(targetSection){
+                window.scrollTo({
+                    top: targetSection.offsetTop - 120,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+
     addInstagramOverlayText();
 });
 
@@ -271,7 +317,6 @@ jQuery(function($) {
     // ajax Load More for apartments
     const loadMoreBtn = $('#apartments-load-more');
     const wrapper = $('#apartments-wrapper');
-    // const loadingText = $('#apartments-loading');
     const originalBtnText = loadMoreBtn.text();
 
     loadMoreBtn.on('click', function(e) {
@@ -286,8 +331,6 @@ jQuery(function($) {
             return;
         }
 
-        // loadMoreBtn.hide();
-        // loadingText.show();
         loadMoreBtn.addClass('loading');
         loadMoreBtn.prop('disabled', true);
         loadMoreBtn.text('Loading...');
@@ -324,6 +367,63 @@ jQuery(function($) {
                 loadMoreBtn.removeClass('loading');
                 loadMoreBtn.prop('disabled', false);
                 loadMoreBtn.text(originalBtnText);
+            }
+        });
+    });
+
+    // Ajax Load More for Blog Posts
+    const loadMoreBlogBtn = $('#load-more-btn');
+    const blogWrapper = $('.blog-list__wrapper');
+    const originalBlogBtnText = loadMoreBlogBtn.text();
+
+    loadMoreBlogBtn.on('click', function(e) {
+        e.preventDefault();
+
+        const currentPage = parseInt(loadMoreBlogBtn.attr('data-current-page'));
+        const maxPages = parseInt(loadMoreBlogBtn.attr('data-max-pages'));
+        
+        if (currentPage >= maxPages || loadMoreBlogBtn.hasClass('loading')) {
+            return;
+        }
+
+        loadMoreBlogBtn.addClass('loading');
+        loadMoreBlogBtn.prop('disabled', true);
+        loadMoreBlogBtn.text('Loading...');
+
+        const nextPage = currentPage + 1;
+
+        $.ajax({
+            url: landingpad_vars.ajax_url,
+            type: 'POST',
+            data: {
+                action: 'load_more_posts',
+                security: landingpad_vars.nonce,
+                page: nextPage
+            },
+            success: function(response) {
+                if (response) {
+                    blogWrapper.append(response);
+
+                    loadMoreBlogBtn.attr('data-current-page', nextPage);
+
+                    loadMoreBlogBtn.removeClass('loading');
+
+                    if (nextPage >= maxPages) {
+                        loadMoreBlogBtn.parent().slideUp(); 
+                        loadMoreBlogBtn.remove();
+                    } else {
+                        loadMoreBlogBtn.prop('disabled', false);
+                        loadMoreBlogBtn.text(originalBlogBtnText);
+                    }
+                } else {
+                    loadMoreBlogBtn.remove();
+                }
+            },
+            error: function(error) {
+                console.log('Error loading posts:', error);
+                loadMoreBlogBtn.removeClass('loading');
+                loadMoreBlogBtn.prop('disabled', false);
+                loadMoreBlogBtn.text(originalBlogBtnText);
             }
         });
     });

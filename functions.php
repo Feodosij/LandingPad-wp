@@ -454,7 +454,7 @@ add_filter('post_thumbnail_html', 'add_lazy_load_to_post_thumbnail', 10, 1);
 // change menu style for some page
 add_filter( 'body_class', function( $classes ) {
 
-    if ( is_singular( 'services' ) || is_singular( 'apartment' )  ) {
+    if ( is_singular( 'services' ) || is_singular( 'apartment' ) || is_home() || is_singular( 'post' ) ) {
         $classes[] = 'header_light_style';
     }
 
@@ -590,3 +590,78 @@ function theme_enqueue_google_maps() {
     }
 }
 add_action('wp_enqueue_scripts', 'theme_enqueue_google_maps');
+
+// table of content on single post
+function get_content_with_toc( $content ) {
+    $toc = '';
+    
+    $pattern = '/<h([2-3]).*?>(.*?)<\/h\1>/';
+    
+    if ( preg_match_all( $pattern, $content, $matches, PREG_SET_ORDER ) ) {
+        
+        $toc .= '<ul class="toc__list">';
+        
+        foreach ( $matches as $match ) {
+            $tag = $match[1];
+            $title = strip_tags( $match[2] );
+            $slug = sanitize_title( $title );
+            
+            if ( ! $slug ) {
+                $slug = 'section-' . rand(1000, 9999);
+            }
+
+            $toc .= '<li class="toc__item toc-level-' . $tag . '">';
+            $toc .= '<a href="#' . $slug . '" class="toc__link">' . $title . '</a>';
+            $toc .= '</li>';
+
+            $replacement = '<h' . $tag . ' id="' . $slug . '">' . $match[2] . '</h' . $tag . '>';
+            
+            $content = preg_replace( '/' . preg_quote( $match[0], '/' ) . '/', $replacement, $content, 1 );
+        }
+        
+        $toc .= '</ul>';
+    }
+
+    return [
+        'content' => $content,
+        'toc' => $toc
+    ];
+}
+
+// ajax load more blog
+function load_more_posts_handler(){
+    check_ajax_referer('load_more_nonce', 'security');
+
+    $paged = $_POST['page'];
+  
+    $args = array(
+        'post_type' => 'post',
+        'post_status' => 'publish',
+        'posts_per_page' => 5,
+        'paged' => $paged,
+    );
+
+    $query = new WP_Query( $args );
+
+    if( $query->have_posts() ) :
+        while( $query->have_posts() ): $query->the_post();
+            
+            get_template_part( 'template-parts/content', 'blog-card' );
+
+        endwhile;
+    endif;
+
+    wp_reset_postdata();
+    die();
+}
+add_action('wp_ajax_load_more_posts', 'load_more_posts_handler');
+add_action('wp_ajax_nopriv_load_more_posts', 'load_more_posts_handler');
+
+// filter for active page in menu
+function landingpad_remove_active_class_from_anchors($classes, $item) {
+    if (strpos($item->url, '#') !== false && $item->url !== '#') {
+        $classes = array_diff($classes, array('current-menu-item', 'current_page_item', 'current-menu-ancestor'));
+    }
+    return $classes;
+}
+add_filter('nav_menu_css_class', 'landingpad_remove_active_class_from_anchors', 10, 2);

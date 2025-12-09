@@ -102,6 +102,10 @@
             &:last-child {
                 margin-right: 0;
             }
+
+            &.current-menu-item > a, &.current_page_parent > a {
+                font-weight: 700; 
+            }
         }
 
         .menu-item-has-children {

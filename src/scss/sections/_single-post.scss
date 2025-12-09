@@ -1,0 +1,137 @@
+@use '../base/variables' as *;
+
+.single-blog {
+    &__header {
+        margin-bottom: 1.25rem;
+    }
+
+    &__title {
+        font-family: $font-futura;
+        font-weight: 500;
+        font-size: 2.5rem;
+        line-height: 100%;
+        margin-bottom: 1.25rem;
+
+        @media (max-width: $tablet-sm) {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+    }
+
+    &__meta {
+        font-family: $font-futura;
+        font-weight: 400;
+        font-size: 1rem;
+        line-height: 20px;
+        margin-bottom: 1.25rem;
+        color: #7A7A7A;
+    }
+
+    &__thumbnail {
+        img {
+            width: 100%;
+            border-radius: 8px;
+            object-fit: cover;
+            max-height: 360px;
+
+            @media (max-width: $tablet-sm) {
+                height: 250px;
+            }
+        }
+    }
+
+    &__wrapper {
+        display: flex;
+        gap: 32px;
+    }
+
+    &__content {
+        flex: 1;
+
+        font-family: $font-futura;
+        font-weight: 400;
+        font-size: 1.25rem;
+        line-height: 28px;
+
+        h2, h3 {
+            margin-bottom: 1.25rem;
+
+            @media (max-width: $tablet-sm) {
+                margin-bottom: 0.5rem;
+            }
+        }
+
+        img {
+            border-radius: 8px;
+
+            @media (max-width: $tablet-sm) {
+                height: 180px;
+            }
+        }
+    }
+
+    &__sidebar {
+        width: 324px;
+        flex-shrink: 0;
+
+        @media (max-width: $tablet) {
+            display: none;
+        }
+    }
+}
+
+// table of content
+.toc {
+    position: sticky;
+    top: 40px;
+    margin-top: 75px;
+
+    &__list {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    &__item {
+        font-family: $font-futura;
+        font-weight: 400;
+        font-size: 1.25rem;
+        line-height: 1.6;
+    }
+
+    &__link {
+        text-decoration: none;
+        position: relative;
+        color: #7A7A7A;
+        padding-left: 20px;
+        transition: all 0.3s ease;
+
+        &::after {
+            content: "";
+            position: absolute;
+            width: 15px;
+            height: 2px;
+            background-color: $main-black;
+            left: 0;
+            top: 12px;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        &:visited {
+            color: #7A7A7A;
+        }
+
+        &:hover {
+            color: $main-black;
+        }
+
+        &.active {
+            color: $main-black;
+
+            &::after {
+                opacity: 1;
+            }
+        }
+    }
+}

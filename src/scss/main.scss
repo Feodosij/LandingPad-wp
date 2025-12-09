@@ -23,6 +23,10 @@
 @use './sections/apartments';
 @use './sections/single-apartment';
 
+// blog
+@use './sections/blog-list';
+@use './sections/single-post';
+
 body {
     font-family: $font-gilroy;
     font-weight: 400;
