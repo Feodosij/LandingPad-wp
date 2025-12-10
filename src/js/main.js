@@ -92,80 +92,6 @@ window.acf_init_maps = function() {
     });
 };
 
-document.addEventListener('DOMContentLoaded', () => {
-    // menu scroll
-    const header = document.querySelector( '.header' );
-
-    if ( header ) {
-        window.addEventListener( 'scroll', () => {
-            if ( window.scrollY > 5 ) {
-                header.classList.add( 'is_scrolled' );
-            } else {
-                header.classList.remove( 'is_scrolled' );
-            }
-        });
-    }
-
-    // mobile menu, burger
-    const burger = document.querySelector('#burger');
-    const menuOverlay = document.querySelector('#js-menu-overlay');
-    const body = document.body;
-
-    if (header && burger && menuOverlay) {
-        burger.addEventListener('click', () => {
-            const isOpen = header.classList.toggle('mobile-menu-open');
-            burger.setAttribute('aria-expanded', isOpen);
-            body.classList.toggle( 'no-scroll' );
-        });
-
-        menuOverlay.addEventListener('click', () => {
-            header.classList.remove('mobile-menu-open');
-            burger.setAttribute('aria-expanded', 'false');
-            body.classList.remove( 'no-scroll' );
-        });
-    }
-
-
-    const parentLinks = document.querySelectorAll('.mobile-menu .menu-item-has-children > a');
-
-    parentLinks.forEach((link) => {
-        link.addEventListener('click', (e) => {
-            e.preventDefault(); 
-            
-            const parentLi = link.parentElement;
-            parentLi.classList.toggle('is-open');
-        });
-    });
-
-
-    // default open one accordion
-    const TARGET_PAGE_CLASS = 'single-services';
-    const isTargetPage = document.body.classList.contains(TARGET_PAGE_CLASS);
-
-    if (isTargetPage) {
-        if (window.location.hash) {
-            const targetId = window.location.hash;
-            const targetElement = document.querySelector(targetId);
-
-            if (targetElement && targetElement.tagName === 'DETAILS') {
-                targetElement.setAttribute('open', true);
-            } 
-
-        } else {
-            const allAccordions = document.querySelectorAll(".accordion__details");
-
-            if (allAccordions.length === 0) {
-                return; 
-            }
-
-            const first = allAccordions[0];
-            first.setAttribute("open", true);
-        }
-    }
-
-    addInstagramOverlayText();
-});
-
 // add "View post" text to instagram card overlay 
 function addInstagramOverlayText() {
     const instagramItems = document.querySelectorAll('#sb_instagram #sbi_images .sbi_item');
@@ -271,7 +197,6 @@ jQuery(function($) {
     // ajax Load More for apartments
     const loadMoreBtn = $('#apartments-load-more');
     const wrapper = $('#apartments-wrapper');
-    // const loadingText = $('#apartments-loading');
     const originalBtnText = loadMoreBtn.text();
 
     loadMoreBtn.on('click', function(e) {
@@ -286,8 +211,6 @@ jQuery(function($) {
             return;
         }
 
-        // loadMoreBtn.hide();
-        // loadingText.show();
         loadMoreBtn.addClass('loading');
         loadMoreBtn.prop('disabled', true);
         loadMoreBtn.text('Loading...');
@@ -327,70 +250,256 @@ jQuery(function($) {
             }
         });
     });
-});
 
+    // Ajax Load More for Blog Posts
+    const loadMoreBlogBtn = $('#load-more-btn');
+    const blogWrapper = $('.blog-list__wrapper');
+    const originalBlogBtnText = loadMoreBlogBtn.text();
 
-// gallery ligtbox
-const lightbox = document.getElementById('simple-lightbox');
+    loadMoreBlogBtn.on('click', function(e) {
+        e.preventDefault();
 
-if (lightbox) {
-    const lightboxImg = lightbox.querySelector('.lightbox__image');
-    const closeBtn = lightbox.querySelector('.lightbox__close');
-    const lightboxCounter = lightbox.querySelector('.lightbox__counter');
-
-    const prevBtn = lightbox.querySelector('.lightbox__prev');
-    const nextBtn = lightbox.querySelector('.lightbox__next');
-    
-    let galleryLinks = document.querySelectorAll('.js-lightbox-trigger:not(.slick-cloned)');
-    let currentIndex = 0;
-
-    function updateCounter() {
-        if (lightboxCounter) {
-            lightboxCounter.textContent = `${currentIndex + 1} of ${galleryLinks.length}`;
+        const currentPage = parseInt(loadMoreBlogBtn.attr('data-current-page'));
+        const maxPages = parseInt(loadMoreBlogBtn.attr('data-max-pages'));
+        
+        if (currentPage >= maxPages || loadMoreBlogBtn.hasClass('loading')) {
+            return;
         }
-    }
 
-    function openLightbox(index) {
-        currentIndex = index;
-        const url = galleryLinks[currentIndex].getAttribute('href');
-        
-        lightboxImg.src = url;
-        lightbox.classList.add('is-open');
-        document.body.classList.add('no-scroll');
+        loadMoreBlogBtn.addClass('loading');
+        loadMoreBlogBtn.prop('disabled', true);
+        loadMoreBlogBtn.text('Loading...');
 
-        updateCounter();
-    }
+        const nextPage = currentPage + 1;
 
-    function closeLightbox() {
-        lightbox.classList.remove('is-open');
-        lightboxImg.src = '';
-        document.body.classList.remove('no-scroll');
-    }
+        $.ajax({
+            url: landingpad_vars.ajax_url,
+            type: 'POST',
+            data: {
+                action: 'load_more_posts',
+                security: landingpad_vars.nonce,
+                page: nextPage
+            },
+            success: function(response) {
+                if (response) {
+                    blogWrapper.append(response);
 
-    function changeSlide(n) {
-        currentIndex += n;
-        
-        if (currentIndex >= galleryLinks.length) currentIndex = 0;
-        if (currentIndex < 0) currentIndex = galleryLinks.length - 1;
-        
-        const url = galleryLinks[currentIndex].getAttribute('href');
-        lightboxImg.src = url;
+                    loadMoreBlogBtn.attr('data-current-page', nextPage);
 
-        updateCounter();
-    }
+                    loadMoreBlogBtn.removeClass('loading');
 
-    galleryLinks.forEach((link, index) => {
-        link.addEventListener('click', (e) => {
-            e.preventDefault();
-            openLightbox(index);
+                    if (nextPage >= maxPages) {
+                        loadMoreBlogBtn.parent().slideUp(); 
+                        loadMoreBlogBtn.remove();
+                    } else {
+                        loadMoreBlogBtn.prop('disabled', false);
+                        loadMoreBlogBtn.text(originalBlogBtnText);
+                    }
+                } else {
+                    loadMoreBlogBtn.remove();
+                }
+            },
+            error: function(error) {
+                console.log('Error loading posts:', error);
+                loadMoreBlogBtn.removeClass('loading');
+                loadMoreBlogBtn.prop('disabled', false);
+                loadMoreBlogBtn.text(originalBlogBtnText);
+            }
         });
     });
 
-    closeBtn.onclick = closeLightbox;
-    prevBtn.onclick = () => changeSlide(-1);
-    nextBtn.onclick = () => changeSlide(1);
 
-    lightbox.onclick = (e) => {
-        if (e.target === lightbox) closeLightbox();
+    // menu scroll
+    const header = document.querySelector( '.header' );
+
+    if ( header ) {
+        window.addEventListener( 'scroll', () => {
+            if ( window.scrollY > 5 ) {
+                header.classList.add( 'is_scrolled' );
+            } else {
+                header.classList.remove( 'is_scrolled' );
+            }
+        });
     }
-}
+
+    // mobile menu, burger
+    const burger = document.querySelector('#burger');
+    const menuOverlay = document.querySelector('#js-menu-overlay');
+    const body = document.body;
+
+    if (header && burger && menuOverlay) {
+        burger.addEventListener('click', () => {
+            const isOpen = header.classList.toggle('mobile-menu-open');
+            burger.setAttribute('aria-expanded', isOpen);
+            body.classList.toggle( 'no-scroll' );
+        });
+
+        menuOverlay.addEventListener('click', () => {
+            header.classList.remove('mobile-menu-open');
+            burger.setAttribute('aria-expanded', 'false');
+            body.classList.remove( 'no-scroll' );
+        });
+    }
+
+
+    const parentLinks = document.querySelectorAll('.mobile-menu .menu-item-has-children > a');
+
+    parentLinks.forEach((link) => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault(); 
+            
+            const parentLi = link.parentElement;
+            parentLi.classList.toggle('is-open');
+        });
+    });
+
+
+    // default open one accordion
+    const TARGET_PAGE_CLASS = 'single-services';
+    const isTargetPage = document.body.classList.contains(TARGET_PAGE_CLASS);
+
+    if (isTargetPage) {
+        if (window.location.hash) {
+            const targetId = window.location.hash;
+            const targetElement = document.querySelector(targetId);
+
+            if (targetElement && targetElement.tagName === 'DETAILS') {
+                targetElement.setAttribute('open', true);
+            } 
+
+        } else {
+            const allAccordions = document.querySelectorAll(".accordion__details");
+
+            if (allAccordions.length === 0) {
+                return; 
+            }
+
+            const first = allAccordions[0];
+            first.setAttribute("open", true);
+        }
+    }
+
+    // table of content
+    function initTableOfContent() {
+
+        if ( !document.body.classList.contains( 'single-post' ) ) {
+            return; 
+        }
+    
+        const tocLinks = document.querySelectorAll('.toc__link');
+        const headings = document.querySelectorAll('.single-blog__content h2, .single-blog__content h3');
+        
+        if (tocLinks.length === 0 || headings.length === 0) return;
+
+        const observerOptions = {
+            root: null,
+            rootMargin: '-100px 0px -60% 0px',
+            threshold: 0
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    tocLinks.forEach(link => link.classList.remove('active'));
+                    
+                    const activeId = entry.target.getAttribute('id');
+                    const activeLink = document.querySelector(`.toc__link[href="#${activeId}"]`);
+                    
+                    if (activeLink) {
+                        activeLink.classList.add('active');
+                    }
+                }
+            });
+        }, observerOptions);
+
+        headings.forEach(heading => {
+            observer.observe(heading);
+        });
+        
+        tocLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                const targetSection = document.getElementById(targetId);
+                
+                if(targetSection){
+                    window.scrollTo({
+                        top: targetSection.offsetTop - 120,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    }
+
+    initTableOfContent();
+
+    addInstagramOverlayText();
+
+    // gallery ligtbox
+    const lightbox = document.getElementById('simple-lightbox');
+
+    if (lightbox) {
+        const lightboxImg = lightbox.querySelector('.lightbox__image');
+        const closeBtn = lightbox.querySelector('.lightbox__close');
+        const lightboxCounter = lightbox.querySelector('.lightbox__counter');
+
+        const prevBtn = lightbox.querySelector('.lightbox__prev');
+        const nextBtn = lightbox.querySelector('.lightbox__next');
+        
+        let galleryLinks = document.querySelectorAll('.js-lightbox-trigger:not(.slick-cloned)');
+        let currentIndex = 0;
+
+        function updateCounter() {
+            if (lightboxCounter) {
+                lightboxCounter.textContent = `${currentIndex + 1} of ${galleryLinks.length}`;
+            }
+        }
+
+        function openLightbox(index) {
+            currentIndex = index;
+            const url = galleryLinks[currentIndex].getAttribute('href');
+            
+            lightboxImg.src = url;
+            lightbox.classList.add('is-open');
+            document.body.classList.add('no-scroll');
+
+            updateCounter();
+        }
+
+        function closeLightbox() {
+            lightbox.classList.remove('is-open');
+            lightboxImg.src = '';
+            document.body.classList.remove('no-scroll');
+        }
+
+        function changeSlide(n) {
+            currentIndex += n;
+            
+            if (currentIndex >= galleryLinks.length) currentIndex = 0;
+            if (currentIndex < 0) currentIndex = galleryLinks.length - 1;
+            
+            const url = galleryLinks[currentIndex].getAttribute('href');
+            lightboxImg.src = url;
+
+            updateCounter();
+        }
+
+        galleryLinks.forEach((link, index) => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                openLightbox(index);
+            });
+        });
+
+        closeBtn.onclick = closeLightbox;
+        prevBtn.onclick = () => changeSlide(-1);
+        nextBtn.onclick = () => changeSlide(1);
+
+        lightbox.onclick = (e) => {
+            if (e.target === lightbox) closeLightbox();
+        }
+    }
+});
+
+

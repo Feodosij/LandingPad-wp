@@ -1,0 +1,150 @@
+@use '../base/variables' as *;
+
+.blog-list {
+    &__wrapper {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+
+    &__link {
+        text-decoration: none;
+    }
+}
+
+.blog-title {
+    font-family: $font-futura;
+    font-weight: 500;
+    font-size: 2rem;
+    line-height: 100%;
+    position: relative;
+    width: fit-content;
+
+    svg {
+        position: absolute;
+        top: -12px;
+        right: -20px;
+        width: 23px;
+        height: 24px;
+        object-fit: contain;
+
+        path {
+            stroke: $main-blue;
+        }
+    }
+}
+
+.blog-card {
+    border-radius: 16px;
+    box-shadow: 0px 3px 28px 0px #CBCBCB40;
+    padding: 16px;
+    margin: 0;
+
+    &__image-wrapper {
+        border-radius: 16px;
+        margin-bottom: 1rem;
+        max-height: 360px;
+        overflow: hidden;
+    }
+
+    &__img {
+        width: 100%;
+        border-radius: 16px;
+        object-fit: cover;
+        max-height: 360px;
+
+        @media (max-width: $tablet-sm) {
+            height: 200px;
+        }
+    }
+
+    &__title {
+        font-family: $font-futura;
+        font-weight: 500;
+        font-size: 1.25rem;
+        line-height: 100%;
+        color: $main-black;
+        margin-bottom: 0.5rem;
+        transition: color 0.3s ease;
+
+        &:hover {
+            color: $text-blue;
+        }
+    }
+
+    &__meta {
+        font-family: $font-futura;
+        font-weight: 400;
+        font-size: 1rem;
+        line-height: 20px;
+        color: #B3B3B3;
+        margin-bottom: 1rem;
+    }
+
+    &__excerpt {
+        font-family: $font-futura;
+        font-weight: 400;
+        font-size: 1rem;
+        line-height: 20px;
+        color: #454953;
+    }
+}
+
+.breadcrumbs {
+    margin: 24px 0 48px 0;
+    display: flex;
+    align-items: center;
+
+    @media (max-width: $tablet-sm) {
+        margin: 24px 0 32px 0;
+    }
+
+    &__sep {
+        height: 16px;
+        width: 16px;
+        margin: 0 8px;
+    } 
+
+    &__sep-last {
+        @media (max-width: $mobile) {
+            display: none;
+        }
+    }
+
+    &__link {
+        font-family: $font-futura;
+        font-weight: 400;
+        font-size: 1rem;
+        line-height: 24px;
+        color: #838383;
+        text-decoration: none;
+        transition: color 0.3s ease;
+
+        &:visited {
+            color: #838383;
+        }
+
+        &:hover {
+            color: $main-blue;
+        }
+    }
+
+    &__current {
+        font-family: $font-futura;
+        font-weight: 500;
+        font-size: 1rem;
+        line-height: 24px;
+        letter-spacing: 0.15%;
+        color: $main-blue;
+
+        @media (max-width: $mobile) {
+            display: none;
+        }
+    }
+}
+
+.load-more-blog {
+    max-width: fit-content;
+    margin-top: 32px;
+    margin-inline: auto;
+}
