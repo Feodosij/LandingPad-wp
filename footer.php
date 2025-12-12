@@ -14,9 +14,9 @@
 	<footer id="colophon" class="site-footer footer">
 		<div class="footer__container container">
 			<div class="footer__copyright">
-				<p><a href="#">Terms of Service</a>
+				<p><a href="/terms-of-use-agreement">Terms of Service</a>
 				 	and 
-				 	<a href="#">Privacy Policy</a>
+				 	<a href="/privacy-policy">Privacy Policy</a>
 				</p>
 			</div>
 		</div>

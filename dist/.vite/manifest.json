@@ -1,4 +1,12 @@
 {
+  "_jquery-B9J7kdIa.js": {
+    "file": "assets/jquery-B9J7kdIa.js",
+    "name": "jquery"
+  },
+  "_jquery-legacy-DA4Pv4pk.js": {
+    "file": "assets/jquery-legacy-DA4Pv4pk.js",
+    "name": "jquery"
+  },
   "src/fonts/FuturaBookC.woff": {
     "file": "assets/FuturaBookC-BmUX4WAq.woff",
     "src": "src/fonts/FuturaBookC.woff"
@@ -36,21 +44,41 @@
     "src": "src/fonts/Gilroy-Regular.woff2"
   },
   "src/js/main-legacy.js": {
-    "file": "assets/main-legacy-B9autyHd.js",
+    "file": "assets/main-legacy-BkXX8SoA.js",
     "name": "main",
     "src": "src/js/main-legacy.js",
     "isEntry": true,
     "imports": [
       "src/scss/main-legacy.scss"
+    ],
+    "dynamicImports": [
+      "src/js/modules/sliders-legacy.js",
+      "src/js/modules/sliders-legacy.js",
+      "src/js/modules/google-map-legacy.js",
+      "src/js/modules/accordion-legacy.js",
+      "src/js/modules/table-of-content-legacy.js",
+      "src/js/modules/lightbox-legacy.js",
+      "src/js/modules/load-more-ajax-legacy.js",
+      "src/js/modules/load-more-ajax-legacy.js"
     ]
   },
   "src/js/main.js": {
-    "file": "assets/main-CJk-t6HG.js",
+    "file": "assets/main-B1KEx3oH.js",
     "name": "main",
     "src": "src/js/main.js",
     "isEntry": true,
+    "dynamicImports": [
+      "src/js/modules/sliders.js",
+      "src/js/modules/sliders.js",
+      "src/js/modules/google-map.js",
+      "src/js/modules/accordion.js",
+      "src/js/modules/table-of-content.js",
+      "src/js/modules/lightbox.js",
+      "src/js/modules/load-more-ajax.js",
+      "src/js/modules/load-more-ajax.js"
+    ],
     "css": [
-      "assets/styles-ZryI_hV5.css"
+      "assets/styles-B1qb_6Ce.css"
     ],
     "assets": [
       "assets/Gilroy-Regular-CY081Tb4.woff2",
@@ -64,8 +92,101 @@
       "assets/FuturaPT-Bold-BbVXbS3M.woff"
     ]
   },
+  "src/js/modules/accordion-legacy.js": {
+    "file": "assets/accordion-legacy-ifDP3pK-.js",
+    "name": "accordion",
+    "src": "src/js/modules/accordion-legacy.js",
+    "isDynamicEntry": true
+  },
+  "src/js/modules/accordion.js": {
+    "file": "assets/accordion-CgBL4r9H.js",
+    "name": "accordion",
+    "src": "src/js/modules/accordion.js",
+    "isDynamicEntry": true
+  },
+  "src/js/modules/google-map-legacy.js": {
+    "file": "assets/google-map-legacy-BMza5GXf.js",
+    "name": "google-map",
+    "src": "src/js/modules/google-map-legacy.js",
+    "isDynamicEntry": true,
+    "imports": [
+      "_jquery-legacy-DA4Pv4pk.js"
+    ]
+  },
+  "src/js/modules/google-map.js": {
+    "file": "assets/google-map-BmZKOy0D.js",
+    "name": "google-map",
+    "src": "src/js/modules/google-map.js",
+    "isDynamicEntry": true,
+    "imports": [
+      "_jquery-B9J7kdIa.js"
+    ]
+  },
+  "src/js/modules/lightbox-legacy.js": {
+    "file": "assets/lightbox-legacy-Dly3y6Mw.js",
+    "name": "lightbox",
+    "src": "src/js/modules/lightbox-legacy.js",
+    "isDynamicEntry": true
+  },
+  "src/js/modules/lightbox.js": {
+    "file": "assets/lightbox-BGDYT5jj.js",
+    "name": "lightbox",
+    "src": "src/js/modules/lightbox.js",
+    "isDynamicEntry": true
+  },
+  "src/js/modules/load-more-ajax-legacy.js": {
+    "file": "assets/load-more-ajax-legacy-TSNbbnic.js",
+    "name": "load-more-ajax",
+    "src": "src/js/modules/load-more-ajax-legacy.js",
+    "isDynamicEntry": true,
+    "imports": [
+      "_jquery-legacy-DA4Pv4pk.js"
+    ]
+  },
+  "src/js/modules/load-more-ajax.js": {
+    "file": "assets/load-more-ajax-DS8-Ippe.js",
+    "name": "load-more-ajax",
+    "src": "src/js/modules/load-more-ajax.js",
+    "isDynamicEntry": true,
+    "imports": [
+      "_jquery-B9J7kdIa.js"
+    ]
+  },
+  "src/js/modules/sliders-legacy.js": {
+    "file": "assets/sliders-legacy-LOB-Neku.js",
+    "name": "sliders",
+    "src": "src/js/modules/sliders-legacy.js",
+    "isDynamicEntry": true,
+    "imports": [
+      "_jquery-legacy-DA4Pv4pk.js"
+    ]
+  },
+  "src/js/modules/sliders.js": {
+    "file": "assets/sliders-DYXZi-lS.js",
+    "name": "sliders",
+    "src": "src/js/modules/sliders.js",
+    "isDynamicEntry": true,
+    "imports": [
+      "_jquery-B9J7kdIa.js"
+    ],
+    "css": [
+      "assets/sliders-CbWFAYwR.css"
+    ]
+  },
+  "src/js/modules/table-of-content-legacy.js": {
+    "file": "assets/table-of-content-legacy-BKuEDfs3.js",
+    "name": "table-of-content",
+    "src": "src/js/modules/table-of-content-legacy.js",
+    "isDynamicEntry": true
+  },
+  "src/js/modules/table-of-content.js": {
+    "file": "assets/table-of-content-DUsBW0QA.js",
+    "name": "table-of-content",
+    "src": "src/js/modules/table-of-content.js",
+    "isDynamicEntry": true
+  },
   "src/scss/main-legacy.scss": {
-    "file": "assets/styles-legacy-DuswbXH6.js",
+    "file": "assets/styles-legacy-BtIILoxd.js",
     "name": "styles",
     "src": "src/scss/main-legacy.scss",
     "isEntry": true,
@@ -82,12 +203,12 @@
     ]
   },
   "src/scss/main.scss": {
-    "file": "assets/styles-ZryI_hV5.css",
+    "file": "assets/styles-B1qb_6Ce.css",
     "src": "src/scss/main.scss",
     "isEntry": true
   },
   "vite/legacy-polyfills-legacy": {
-    "file": "assets/polyfills-legacy-B_ikRZe5.js",
+    "file": "assets/polyfills-legacy-Sk1Xo0Db.js",
     "name": "polyfills",
     "src": "vite/legacy-polyfills-legacy",
     "isEntry": true
