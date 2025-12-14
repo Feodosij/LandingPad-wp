@@ -1,60 +1,44 @@
 <?php
 /**
  * The template for displaying 404 pages (not found)
- *
- * @link https://codex.wordpress.org/Creating_an_Error_404_Page
- *
- * @package LandingPadTheme
  */
+
+$title = get_field( '404_title', 'option' );
+$subtitle = get_field( '404_subtitle', 'option' );
+$background = get_field( '404_background', 'option' );
 
 get_header();
 ?>
 
 	<main id="primary" class="site-main">
-
 		<section class="error-404 not-found">
-			<header class="page-header">
-				<h1 class="page-title"><?php esc_html_e( 'Oops! That page can&rsquo;t be found.', 'landingpadtheme' ); ?></h1>
-			</header><!-- .page-header -->
+			<?php if ( $background ) { ?>
+				<img src="<?php echo esc_url($background); ?>" alt="404 Background" class="not-found__background" loading="lazy">
+			<?php } ?>
 
-			<div class="page-content">
-				<p><?php esc_html_e( 'It looks like nothing was found at this location. Maybe try one of the links below or a search?', 'landingpadtheme' ); ?></p>
+			<div class="not-found__content">
+				<?php if ( $title ) { ?>
+					<h1 class="not-found__title">
+						<?php echo esc_html( $title ); ?>
+						<svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path d="M53.5 29C53.5 23 53 12.5 53 2.5M40 38L14 17M35.5 53C33.9 53 12.8333 53 2.5 53" stroke="#2967F0" stroke-width="5" stroke-linecap="round" />
+						</svg>
+					</h1>
+				<?php } ?>
 
-					<?php
-					get_search_form();
+				<?php if ( $subtitle ) { ?>
+					<div class="not-found__subtitle"><?php echo esc_html( $subtitle ); ?></div>
+				<?php } ?>
 
-					the_widget( 'WP_Widget_Recent_Posts' );
-					?>
-
-					<div class="widget widget_categories">
-						<h2 class="widget-title"><?php esc_html_e( 'Most Used Categories', 'landingpadtheme' ); ?></h2>
-						<ul>
-							<?php
-							wp_list_categories(
-								array(
-									'orderby'    => 'count',
-									'order'      => 'DESC',
-									'show_count' => 1,
-									'title_li'   => '',
-									'number'     => 10,
-								)
-							);
-							?>
-						</ul>
-					</div><!-- .widget -->
-
-					<?php
-					/* translators: %1$s: smiley */
-					$landingpadtheme_archive_content = '<p>' . sprintf( esc_html__( 'Try looking in the monthly archives. %1$s', 'landingpadtheme' ), convert_smilies( ':)' ) ) . '</p>';
-					the_widget( 'WP_Widget_Archives', 'dropdown=1', "after_title=</h2>$landingpadtheme_archive_content" );
-
-					the_widget( 'WP_Widget_Tag_Cloud' );
-					?>
-
-			</div><!-- .page-content -->
-		</section><!-- .error-404 -->
-
-	</main><!-- #main -->
+				<a href="<?php echo home_url(); ?>" class="not-found__link">
+					Go to main page
+				</a>
+			</div>
+		</section>
+	</main>
 
 <?php
-get_footer();
+wp_footer(); 
+?>
+</body>
+</html>

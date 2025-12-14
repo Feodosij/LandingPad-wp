@@ -12,13 +12,13 @@ $GLOBALS['accent_bg_light'] = '#F9FBFF';
 get_header(); 
 
 $hero_bg = get_field('background_image');
-if ( $hero_bg ) {
-    $background_style = 'style="background-image: url(' . esc_url($hero_bg) . ');"';
-}
 ?>
 
 <main>
-    <section class="hero" <?php echo $background_style; ?>>
+    <section class="hero">
+        <?php if ( $hero_bg) { ?>
+            <img src="<?php echo esc_url( $hero_bg ); ?>" alt="Hero background" class="hero__bg-img" fetchpriority="high" loading="eager">
+        <?php } ?>
         <div class="hero__container container">
             <div class="hero__content">
                 <?php if ( $main_title = get_field('main_title') ) { ?>

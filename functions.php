@@ -153,59 +153,72 @@ add_action( 'wp_enqueue_scripts', 'landingpadtheme_scripts' );
 
 // -- VITE SETUP
 
-function vite_assets() {
+function is_vite_active() {
+    $port = 5173;
+    
+    $connection = @fsockopen( '127.0.0.1', $port, $errno, $errstr, 0.1 );
+    if ( $connection ) { fclose( $connection ); return true; }
 
-	$vite_dev_server = 'http://localhost:5173';
+    $connection_docker = @fsockopen( 'host.docker.internal', $port, $errno, $errstr, 0.1 );
+    if ( $connection_docker ) { fclose( $connection_docker ); return true; }
 
-	$is_dev = defined('VITE_DEV_MODE') && VITE_DEV_MODE === true;
-
-	if ( $is_dev ) {
-		// dev mode
-		wp_enqueue_script( 'vite-client', $vite_dev_server . '/@vite/client', [], null, true );
-
-		wp_enqueue_script( 'main-js', $vite_dev_server . '/src/js/main.js', array('jquery', 'slick-js'), '1.0', true );
-	} else {
-		// prod mode
-		$dist_path = get_template_directory_uri() . '/dist/';
-		$dist_dir = get_template_directory() . '/dist/';
-
-		$manifest_file = $dist_dir . '.vite/manifest.json';
-
-		if ( file_exists( $manifest_file ) ) {
-			$manifest = json_decode( file_get_contents( $manifest_file ), true );
-
-			if ( isset( $manifest['src/js/main.js'] ) ) {
-				wp_enqueue_script( 'main-js', $dist_path . $manifest['src/js/main.js']['file'], array('jquery'), null, true );
-			}
-			if ( isset( $manifest['src/scss/main.scss'] ) ) {
-                wp_enqueue_style( 'main-css', $dist_path . $manifest['src/scss/main.scss']['file'], [], null );
-            }
-		}
-	}
-
-	wp_localize_script( 'main-js', 'landingpad_vars', array(
-		'ajax_url' => admin_url( 'admin-ajax.php' ),
-		'nonce'    => wp_create_nonce( 'load_more_nonce' )
-	));
+    return false;
 }
-add_action( 'wp_enqueue_scripts', 'vite_assets' );
 
-// add type module for vite scripts
-function add_module_type_attribute( $tag, $handle, $src ) {
-    if ( $handle === 'vite-client' || $handle === 'main-js' ) {
+
+function vite_assets() {
+    $vite_host = 'http://127.0.0.1:5173';
+    $dist_path = get_template_directory() . '/dist/';
+    $dist_uri  = get_template_directory_uri() . '/dist/';
+
+    $is_dev = is_vite_active();
+
+    if ( $is_dev ) {
+        wp_enqueue_script( 'vite-client', $vite_host . '/@vite/client', [], null, true );
+
+        wp_enqueue_script( 'main-js', $vite_host . '/src/js/main.js', array('jquery'), null, true );
         
-        $is_dev = defined('VITE_DEV_MODE') && VITE_DEV_MODE === true;
+        wp_enqueue_style( 'main-css', $vite_host . '/src/scss/main.scss', [], null );
+
+    } else {        
+        $manifest_path = $dist_path . '.vite/manifest.json';
         
-        if ( $is_dev ) {
-            // dev mode
-             $tag = '<script type="module" src="' . esc_url( $src ) . '" id="' . $handle . '-js"></script>';
-        } else {
-            // prod mode
-            if ($handle === 'main-js') {
-                 $tag = '<script type="module" src="' . esc_url( $src ) . '" id="' . $handle . '-js"></script>';
+        if ( ! file_exists( $manifest_path ) ) {
+            $manifest_path = $dist_path . 'manifest.json';
+        }
+
+        if ( file_exists( $manifest_path ) ) {
+            $manifest = json_decode( file_get_contents( $manifest_path ), true );
+
+            if ( isset( $manifest['src/scss/main.scss'] ) ) {
+                $css_file = $manifest['src/scss/main.scss']['file'];
+                wp_enqueue_style( 'main-css', $dist_uri . $css_file, [], null );
+            }
+
+            if ( isset( $manifest['src/js/main.js'] ) ) {
+                $js_file = $manifest['src/js/main.js']['file'];
+                wp_enqueue_script( 'main-js', $dist_uri . $js_file, array('jquery'), null, true );
             }
         }
     }
+
+    wp_localize_script( 'main-js', 'landingpad_vars', array(
+        'ajax_url' => admin_url( 'admin-ajax.php' ),
+        'nonce'    => wp_create_nonce( 'load_more_nonce' )
+    ));
+}
+add_action( 'wp_enqueue_scripts', 'vite_assets' );
+
+// added type="module" and async
+function add_module_type_attribute( $tag, $handle, $src ) {
+    if ( $handle === 'vite-client' || $handle === 'main-js' ) {
+        return '<script type="module" src="' . esc_url( $src ) . '" id="' . $handle . '-js"></script>';
+    }
+
+    if ( $handle === 'google-maps' ) {
+        return str_replace( ' src', ' async src', $tag );
+    }
+
     return $tag;
 }
 add_filter( 'script_loader_tag', 'add_module_type_attribute', 10, 3 );
@@ -454,7 +467,7 @@ add_filter('post_thumbnail_html', 'add_lazy_load_to_post_thumbnail', 10, 1);
 // change menu style for some page
 add_filter( 'body_class', function( $classes ) {
 
-    if ( is_singular( 'services' ) || is_singular( 'apartment' ) || is_home() || is_singular( 'post' ) ) {
+    if ( is_singular( 'services' ) || is_singular( 'apartment' ) || is_home() || is_singular( 'post' ) || is_page_template( 'template-terms.php' ) ) {
         $classes[] = 'header_light_style';
     }
 
@@ -578,7 +591,7 @@ add_filter('acf/fields/google_map/api', 'my_acf_google_map_api');
 function theme_enqueue_google_maps() {
     if ( is_singular('apartment') ) {
 		global $google_maps_key;
-		$api_url = 'https://maps.googleapis.com/maps/api/js?key=' . $google_maps_key;
+		$api_url = 'https://maps.googleapis.com/maps/api/js?key=' . $google_maps_key . '&callback=acf_init_maps_callback';
 
         wp_enqueue_script(
             'google-maps',

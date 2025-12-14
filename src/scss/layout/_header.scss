@@ -103,7 +103,7 @@
                 margin-right: 0;
             }
 
-            &.current-menu-item > a, &.current_page_parent > a {
+            &.current-menu-item > a, &.current_page_ancestor > a {
                 font-weight: 700; 
             }
         }
@@ -206,7 +206,7 @@
         box-shadow: 0 -1px 28px 0 rgba(203, 203, 203, 0.25);
 
         .header__logo svg path {
-            fill: $main-blue;
+            fill: var(--accent_main);
         }
 
         .header__menu {
